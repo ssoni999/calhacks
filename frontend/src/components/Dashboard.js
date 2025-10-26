@@ -6,6 +6,7 @@ const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
 function Dashboard({ recruiterId, candidates, onStageUpdate }) {
   const [kpis, setKpis] = useState(null);
+  const [tooltipStates, setTooltipStates] = useState({});
 
   useEffect(() => {
     if (recruiterId) {
@@ -20,6 +21,21 @@ function Dashboard({ recruiterId, candidates, onStageUpdate }) {
     } catch (error) {
       console.error('Error fetching KPIs:', error);
     }
+  };
+
+  const toggleTooltip = (kpiKey) => {
+    setTooltipStates(prev => ({
+      ...prev,
+      [kpiKey]: !prev[kpiKey]
+    }));
+  };
+
+  const kpiDefinitions = {
+    totalCandidates: 'The total number of candidates currently in your recruitment pipeline across all stages.',
+    conversionRate: 'The percentage of candidates who successfully moved through the pipeline from initial resume review to receiving an offer.',
+    avgExperience: 'The average experience score calculated by AI analysis of candidates\' work history, years of experience, and role progression.',
+    avgSkills: 'The average skills score based on AI evaluation of technical skills, relevant competencies, and job-specific requirements.',
+    avgOverall: 'The comprehensive average score combining experience, skills, and education metrics to provide an overall candidate quality assessment.'
   };
 
   if (!kpis) {
@@ -38,26 +54,132 @@ function Dashboard({ recruiterId, candidates, onStageUpdate }) {
     <div>
       <div className="kpi-grid">
         <div className="kpi-card">
-          <div className="kpi-label">Total Candidates</div>
+          <div className="kpi-header">
+            <div className="kpi-label">Total Candidates</div>
+            <button 
+              className="info-icon" 
+              onClick={() => toggleTooltip('totalCandidates')}
+              aria-label="Show definition"
+            >
+              ℹ️
+            </button>
+          </div>
           <div className="kpi-value">{kpis.total_candidates}</div>
+          {tooltipStates.totalCandidates && (
+            <div className="kpi-tooltip">
+              {kpiDefinitions.totalCandidates}
+            </div>
+          )}
         </div>
         <div className="kpi-card">
-          <div className="kpi-label">Conversion Rate</div>
+          <div className="kpi-header">
+            <div className="kpi-label">Conversion Rate</div>
+            <button 
+              className="info-icon" 
+              onClick={() => toggleTooltip('conversionRate')}
+              aria-label="Show definition"
+            >
+              ℹ️
+            </button>
+          </div>
           <div className="kpi-value">{kpis.conversion_rate}%</div>
+          {tooltipStates.conversionRate && (
+            <div className="kpi-tooltip">
+              {kpiDefinitions.conversionRate}
+            </div>
+          )}
         </div>
         <div className="kpi-card">
-          <div className="kpi-label">Avg Experience Score</div>
+          <div className="kpi-header">
+            <div className="kpi-label">Avg Experience Score</div>
+            <button 
+              className="info-icon" 
+              onClick={() => toggleTooltip('avgExperience')}
+              aria-label="Show definition"
+            >
+              ℹ️
+            </button>
+          </div>
           <div className="kpi-value">{kpis.average_scores.experience}</div>
+          {tooltipStates.avgExperience && (
+            <div className="kpi-tooltip">
+              {kpiDefinitions.avgExperience}
+            </div>
+          )}
         </div>
         <div className="kpi-card">
-          <div className="kpi-label">Avg Skills Score</div>
+          <div className="kpi-header">
+            <div className="kpi-label">Avg Skills Score</div>
+            <button 
+              className="info-icon" 
+              onClick={() => toggleTooltip('avgSkills')}
+              aria-label="Show definition"
+            >
+              ℹ️
+            </button>
+          </div>
           <div className="kpi-value">{kpis.average_scores.skills}</div>
+          {tooltipStates.avgSkills && (
+            <div className="kpi-tooltip">
+              {kpiDefinitions.avgSkills}
+            </div>
+          )}
         </div>
         <div className="kpi-card">
-          <div className="kpi-label">Avg Overall Score</div>
+          <div className="kpi-header">
+            <div className="kpi-label">Avg Overall Score</div>
+            <button 
+              className="info-icon" 
+              onClick={() => toggleTooltip('avgOverall')}
+              aria-label="Show definition"
+            >
+              ℹ️
+            </button>
+          </div>
           <div className="kpi-value">{kpis.average_scores.overall}</div>
+          {tooltipStates.avgOverall && (
+            <div className="kpi-tooltip">
+              {kpiDefinitions.avgOverall}
+            </div>
+          )}
         </div>
       </div>
+
+      {kpis.scores_by_position && Object.keys(kpis.scores_by_position).length > 0 && (
+        <div className="card">
+          <h3>Average Scores by Job Category</h3>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
+            {Object.entries(kpis.scores_by_position).map(([position, scores]) => (
+              <div key={position} style={{ 
+                padding: '1rem', 
+                background: '#f8f9fa', 
+                borderRadius: '8px',
+                borderLeft: '4px solid #667eea'
+              }}>
+                <h4 style={{ margin: '0 0 0.75rem 0', color: '#333', fontSize: '1rem' }}>{position}</h4>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: '#666', fontSize: '0.85rem' }}>Avg Experience:</span>
+                    <strong style={{ color: '#667eea' }}>{scores.avg_experience}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: '#666', fontSize: '0.85rem' }}>Avg Skills:</span>
+                    <strong style={{ color: '#667eea' }}>{scores.avg_skills}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <span style={{ color: '#666', fontSize: '0.85rem' }}>Avg Overall:</span>
+                    <strong style={{ color: '#667eea' }}>{scores.avg_overall}</strong>
+                  </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid #dee2e6' }}>
+                    <span style={{ color: '#666', fontSize: '0.85rem' }}>Candidates:</span>
+                    <strong style={{ color: '#333' }}>{scores.count}</strong>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="card">
         <h3>Pipeline Overview</h3>

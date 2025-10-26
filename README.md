@@ -1,3 +1,4 @@
+
 # RecruitAI - Streamlined Hiring Platform
 
 Transform the recruiting funnel from resumes to hires with AI-powered insights and real-time recruiter KPIs.
