@@ -25,13 +25,7 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
     }
   };
 
-  const kpiDefinitions = {
-    totalCandidates: 'The total number of candidates currently in your recruitment pipeline across all stages.',
-    hireRate: 'The percentage of candidates who successfully moved through the pipeline from initial resume review to receiving an offer.',
-    avgExperience: 'The average experience score calculated by AI analysis of candidates\' work history, years of experience, and role progression.',
-    avgSkills: 'The average skills score based on AI evaluation of technical skills, relevant competencies, and job-specific requirements.',
-    avgOverall: 'The comprehensive average score combining experience, skills, and education metrics to provide an overall candidate quality assessment.'
-  };
+
 
   if (!kpis) {
     return <div>Loading...</div>;
@@ -65,21 +59,18 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
         <div className="kpi-card">
           <div className="kpi-header">
             <div className="kpi-label">Total Candidates</div>
-            <span className="info-icon" title={kpiDefinitions.totalCandidates}>ℹ️</span>
           </div>
           <div className="kpi-value">{kpis.total_candidates}</div>
         </div>
         <div className="kpi-card">
           <div className="kpi-header">
             <div className="kpi-label">Hire Rate</div>
-            <span className="info-icon" title={kpiDefinitions.hireRate}>ℹ️</span>
           </div>
           <div className="kpi-value">{kpis.conversion_rate}%</div>
         </div>
         <div className="kpi-card">
           <div className="kpi-header">
             <div className="kpi-label">Avg Experience Score</div>
-            <span className="info-icon" title={kpiDefinitions.avgExperience}>ℹ️</span>
           </div>
           <div className="kpi-value">{kpis.average_scores.experience}</div>
         </div>
@@ -110,14 +101,12 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
                 </select>
               )}
             </div>
-            <span className="info-icon" title={kpiDefinitions.avgSkills}>ℹ️</span>
           </div>
           <div className="kpi-value">{selectedSkillsScore}</div>
         </div>
         <div className="kpi-card">
           <div className="kpi-header">
             <div className="kpi-label">Avg Overall Score</div>
-            <span className="info-icon" title={kpiDefinitions.avgOverall}>ℹ️</span>
           </div>
           <div className="kpi-value">{kpis.average_scores.overall}</div>
         </div>
