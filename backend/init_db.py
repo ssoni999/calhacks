@@ -474,9 +474,888 @@ Bachelor of Science in Computer Science | Stanford University | 2010 - 2014
         candidate = models.Candidate(**candidate_data)
         db.add(candidate)
     
+    # Add 25 more candidates (5 per job category)
+    additional_candidates = [
+        # Software Engineers (5 candidates)
+        {
+            "name": "Nathan Chen",
+            "email": "nathan.c@email.com",
+            "position": "Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Software engineer with 4 years of experience building scalable web applications using Python, JavaScript, React, and Node.js. Proven track record in developing RESTful APIs and full-stack applications. Strong background in agile development methodologies and cloud deployment.
+WORK EXPERIENCE
+Software Engineer | CloudTech Solutions | Austin, TX | 2020 - Present
+- Developed microservices architecture using Node.js and Express, serving 100k+ users
+- Built responsive React applications with TypeScript and Redux
+- Implemented RESTful APIs with Python Flask and Django frameworks
+- Worked with PostgreSQL and MongoDB for data storage
+- Deployed applications on AWS using Docker containers
+- Collaborated in agile environment with CI/CD pipelines
+Junior Software Developer | Digital Innovations | Austin, TX | 2018 - 2020
+- Built full-stack web applications using Python and JavaScript
+- Developed frontend components with React and Vue.js
+- Created REST APIs using Flask and Express
+- Worked with MySQL and PostgreSQL databases
+TECHNICAL SKILLS
+Languages: Python, JavaScript, TypeScript, Java, SQL
+Frameworks: React, Node.js, Django, Flask, Express
+Databases: PostgreSQL, MongoDB, MySQL
+Cloud: AWS (EC2, S3, RDS), Docker
+Tools: Git, JIRA, Jenkins, Postman
+EDUCATION
+Bachelor of Science in Computer Science | University of Texas | 2014 - 2018
+""",
+            "stage": "Phone Screen"
+        },
+        {
+            "name": "Rachel Green",
+            "email": "rachel.g@email.com",
+            "position": "Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Full-stack software engineer with 3 years of experience in web development and cloud technologies. Expertise in building scalable applications using Python, JavaScript, and modern frameworks. Passionate about clean code and best practices.
+WORK EXPERIENCE
+Software Engineer | TechVentures Inc | San Jose, CA | 2021 - Present
+- Developed and maintained React-based frontend applications
+- Built backend services using Python Django and Node.js
+- Implemented RESTful API endpoints with authentication
+- Worked with PostgreSQL and Redis for data persistence
+- Deployed applications using Docker and AWS ECS
+- Participated in sprint planning and code reviews
+Software Developer Intern | StartupHub | San Jose, CA | 2020 - 2021
+- Developed features for SaaS platform using React and Python
+- Created API endpoints using Django REST Framework
+- Implemented responsive UI with Material-UI components
+- Wrote unit tests using Jest and Pytest
+TECHNICAL SKILLS
+Languages: Python, JavaScript, TypeScript, HTML, CSS
+Frontend: React, Vue.js, Redux, Tailwind CSS, Material-UI
+Backend: Django, Flask, Node.js, Express
+Databases: PostgreSQL, MongoDB, Redis
+Cloud: AWS, Docker
+EDUCATION
+Bachelor of Science in Software Engineering | San Jose State University | 2017 - 2021
+""",
+            "stage": "Resume Review"
+        },
+        {
+            "name": "Marcus Johnson",
+            "email": "marcus.j@email.com",
+            "position": "Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Results-driven software engineer with 5 years of experience developing enterprise applications. Strong background in backend development, API design, and database optimization. Proven ability to deliver high-quality software in fast-paced environments.
+WORK EXPERIENCE
+Software Engineer | EnterpriseSoft | Chicago, IL | 2019 - Present
+- Architected and implemented RESTful APIs handling 5M+ daily requests
+- Developed backend services using Python Django and FastAPI
+- Optimized database queries and implemented caching with Redis
+- Built microservices using Docker containers orchestrated with Kubernetes
+- Implemented CI/CD pipelines using Jenkins and GitHub Actions
+- Collaborated with product team to define API specifications
+Software Developer | WebApps Solutions | Chicago, IL | 2017 - 2019
+- Developed full-stack applications using Python and JavaScript
+- Built RESTful APIs with Django and Flask frameworks
+- Created frontend interfaces with React and Bootstrap
+- Worked with PostgreSQL and MySQL databases
+TECHNICAL SKILLS
+Languages: Python, JavaScript, SQL, Bash
+Frameworks: Django, Flask, FastAPI, React
+Databases: PostgreSQL, MySQL, Redis, MongoDB
+Cloud: AWS, Docker, Kubernetes
+Tools: Git, Jenkins, Postman, JIRA
+EDUCATION
+Bachelor of Science in Computer Science | University of Illinois | 2013 - 2017
+""",
+            "stage": "Resume Review"
+        },
+        {
+            "name": "Priya Patel",
+            "email": "priya.p@email.com",
+            "position": "Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Full-stack engineer with 3 years of experience building web applications and APIs. Expertise in Python, JavaScript, and cloud deployment. Strong problem-solving skills and passion for learning new technologies.
+WORK EXPERIENCE
+Software Engineer | SaaS Pro | Seattle, WA | 2021 - Present
+- Built scalable web applications using Python, Django, and React
+- Developed RESTful APIs serving internal tools and external integrations
+- Implemented user authentication with JWT tokens and OAuth
+- Created responsive UI components with React and CSS-in-JS
+- Worked with PostgreSQL for data modeling and optimization
+- Deployed applications on AWS using EC2, S3, and RDS
+Software Development Intern | CloudStart | Seattle, WA | 2020 - 2021
+- Developed features for B2B platform using Python and React
+- Built API endpoints with Django REST Framework
+- Created automated tests using Pytest and React Testing Library
+- Participated in agile ceremonies and sprint retrospectives
+TECHNICAL SKILLS
+Languages: Python, JavaScript, TypeScript, SQL
+Frameworks: Django, Flask, React, Express
+Databases: PostgreSQL, SQLite
+Cloud: AWS, Heroku
+Testing: Pytest, Jest, React Testing Library
+EDUCATION
+Bachelor of Science in Computer Science | University of Washington | 2017 - 2021
+""",
+            "stage": "Technical Interview"
+        },
+        {
+            "name": "Tyler Mitchell",
+            "email": "tyler.m@email.com",
+            "position": "Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Full-stack developer specializing in modern JavaScript and Python development. 4 years of experience building responsive web applications and APIs. Strong advocate for test-driven development and code quality.
+WORK EXPERIENCE
+Software Engineer | DevStudio | Boulder, CO | 2020 - Present
+- Developed full-stack applications using Node.js, Express, and React
+- Built RESTful APIs with Python FastAPI framework
+- Implemented real-time features using WebSockets and Socket.io
+- Created comprehensive test suites using Jest and Pytest
+- Worked with MongoDB and PostgreSQL databases
+- Deployed applications using Docker and AWS
+Software Developer | WebDev Agency | Denver, CO | 2018 - 2020
+- Built responsive websites using HTML, CSS, and JavaScript
+- Developed single-page applications using React and Vue.js
+- Created backend services with Node.js and Express
+- Implemented user authentication and authorization
+TECHNICAL SKILLS
+Languages: JavaScript, Python, TypeScript, SQL
+Frontend: React, Vue.js, Redux, Tailwind CSS
+Backend: Node.js, Express, FastAPI, Django
+Databases: PostgreSQL, MongoDB
+Cloud: AWS, Docker
+Testing: Jest, Pytest, Cypress
+EDUCATION
+Bachelor of Science in Computer Science | University of Colorado | 2014 - 2018
+""",
+            "stage": "Final Round"
+        },
+        
+        # Senior Software Engineers (5 candidates)
+        {
+            "name": "Jennifer Kim",
+            "email": "jennifer.k@email.com",
+            "position": "Senior Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Senior software engineer with 10 years of experience architecting distributed systems and cloud-native applications. Expert in designing microservices, handling high-scale traffic, and leading engineering teams. Strong background in Python, Java, and AWS infrastructure.
+WORK EXPERIENCE
+Senior Software Engineer | CloudScale Systems | San Francisco, CA | 2021 - Present
+- Architected distributed microservices platform handling 50M+ daily requests
+- Led team of 6 engineers in building scalable backend services
+- Implemented event-driven architecture using Kafka and RabbitMQ
+- Designed data pipelines processing 10TB+ daily using Apache Spark
+- Optimized services reducing latency by 50% and costs by $300k annually
+- Established best practices for code quality and deployment pipelines
+Software Architect | TechCorp Industries | San Francisco, CA | 2018 - 2021
+- Designed microservices architecture for migration from monolith
+- Built high-performance APIs using Go, Python, and Java
+- Implemented caching strategies with Redis and Memcached
+- Led technical decisions and architecture reviews
+Staff Engineer | DataFlow Inc | Mountain View, CA | 2014 - 2018
+- Developed distributed data processing systems
+- Built RESTful APIs and GraphQL services
+- Worked with large-scale databases and data warehouses
+TECHNICAL SKILLS
+Languages: Python, Java, Go, Scala, SQL
+Frameworks: Django, Flask, Spring Boot, gRPC
+Cloud: AWS (extensive), GCP, Kubernetes
+Databases: PostgreSQL, MongoDB, Redis, Cassandra
+Tools: Docker, Kubernetes, Terraform, Jenkins
+EDUCATION
+Master of Science in Computer Science | Stanford University | 2012 - 2014
+Bachelor of Science in Computer Science | UC Berkeley | 2008 - 2012
+""",
+            "stage": "Offer"
+        },
+        {
+            "name": "Robert Zhang",
+            "email": "robert.z@email.com",
+            "position": "Senior Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Senior engineer with 9 years of experience in scalable backend systems and infrastructure. Expert in Python, distributed systems, and cloud architecture. Proven track record of leading projects from conception to production at scale.
+WORK EXPERIENCE
+Senior Software Engineer | ScaleTech Solutions | New York, NY | 2020 - Present
+- Architected and built microservices handling 100M+ requests daily
+- Led development of real-time analytics platform using Kafka and Flink
+- Implemented infrastructure as code using Terraform for AWS resources
+- Optimized database queries and caching, reducing response time by 60%
+- Built comprehensive monitoring and alerting with Prometheus and Grafana
+- Mentored team of 4 junior engineers
+Software Engineer | FinTech Corp | New York, NY | 2016 - 2020
+- Developed high-frequency trading systems with Python and C++
+- Built distributed systems for financial data processing
+- Implemented real-time risk calculation engines
+- Worked with distributed databases and message queues
+Software Engineer | WebServices Inc | Boston, MA | 2015 - 2016
+- Developed backend services using Python and Node.js
+- Built RESTful APIs and GraphQL endpoints
+- Implemented authentication and authorization systems
+TECHNICAL SKILLS
+Languages: Python, Java, Go, C++, SQL
+Frameworks: Django, Flask, FastAPI, Spring Boot
+Cloud: AWS, GCP, Kubernetes, Docker
+Databases: PostgreSQL, MongoDB, Redis, InfluxDB
+Tools: Terraform, Ansible, Jenkins, GitLab CI
+EDUCATION
+Master of Science in Computer Science | MIT | 2013 - 2015
+Bachelor of Science in Engineering | Carnegie Mellon | 2009 - 2013
+""",
+            "stage": "Final Round"
+        },
+        {
+            "name": "Amanda Foster",
+            "email": "amanda.f@email.com",
+            "position": "Senior Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Senior software engineer with 8 years of experience in enterprise software development. Expert in Python, microservices architecture, and cloud infrastructure. Strong background in leading technical initiatives and building scalable systems.
+WORK EXPERIENCE
+Senior Software Engineer | EnterpriseCloud | Atlanta, GA | 2019 - Present
+- Designed and implemented microservices architecture serving 20M+ users
+- Led migration of legacy systems to cloud-native architecture
+- Built real-time data streaming using Apache Kafka and Storm
+- Implemented containerization with Docker and orchestration with Kubernetes
+- Optimized application performance reducing server costs by 40%
+- Established CI/CD best practices and deployment pipelines
+Software Engineer | SoftwareVentures | Austin, TX | 2015 - 2019
+- Developed distributed backend services using Python and Go
+- Built RESTful APIs and GraphQL services
+- Implemented message queuing with RabbitMQ and Redis
+- Worked with PostgreSQL, MongoDB, and Cassandra databases
+- Deployed applications on AWS using Terraform
+Software Developer | TechSolutions | Dallas, TX | 2013 - 2015
+- Developed web applications using Python and Django
+- Built REST APIs for mobile and web clients
+- Worked with MySQL and PostgreSQL databases
+TECHNICAL SKILLS
+Languages: Python, Go, Java, SQL, JavaScript
+Frameworks: Django, Flask, Gin, Express
+Cloud: AWS, Azure, Kubernetes, Docker
+Databases: PostgreSQL, MongoDB, Redis, Cassandra
+Tools: Terraform, Ansible, Jenkins, GitLab
+EDUCATION
+Master of Science in Computer Science | Georgia Tech | 2011 - 2013
+Bachelor of Science in Computer Science | UT Austin | 2007 - 2011
+""",
+            "stage": "Technical Interview"
+        },
+        {
+            "name": "Kevin Liu",
+            "email": "kevin.l@email.com",
+            "position": "Senior Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Senior engineer with 7 years of experience building high-performance distributed systems. Expert in Go, Python, and cloud-native development. Passionate about system architecture, performance optimization, and building reliable services.
+WORK EXPERIENCE
+Senior Software Engineer | CloudNative Inc | San Francisco, CA | 2020 - Present
+- Architected and built microservices platform handling 80M+ daily requests
+- Developed high-performance services using Go and Python
+- Implemented event-driven architecture with Kafka and Redis
+- Built infrastructure as code using Terraform and Ansible
+- Optimized systems reducing latency by 55% and costs by $250k/year
+- Led technical design reviews and architecture decisions
+Software Engineer | Microservices Solutions | San Francisco, CA | 2017 - 2020
+- Developed distributed microservices using Go and Python
+- Built RESTful APIs and gRPC services
+- Implemented caching strategies with Redis and Memcached
+- Worked with container orchestration using Kubernetes
+- Deployed applications on AWS and GCP platforms
+Backend Developer | TechStartup | Palo Alto, CA | 2015 - 2017
+- Built backend services using Python and Node.js
+- Developed RESTful APIs with Django and Express
+- Implemented real-time features using WebSockets
+TECHNICAL SKILLS
+Languages: Go, Python, Java, SQL
+Frameworks: Django, Flask, Gin, Echo
+Cloud: AWS, GCP, Kubernetes, Docker
+Databases: PostgreSQL, MongoDB, Redis
+Tools: Terraform, Ansible, Jenkins, GitLab CI
+EDUCATION
+Bachelor of Science in Computer Science | UC Berkeley | 2011 - 2015
+""",
+            "stage": "Phone Screen"
+        },
+        {
+            "name": "Lisa Wang",
+            "email": "lisa.w@email.com",
+            "position": "Senior Software Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Senior software engineer with 11 years of experience in building large-scale distributed systems and cloud infrastructure. Expert in Python, Java, and AWS. Proven track record of leading multi-team initiatives and delivering high-impact projects.
+WORK EXPERIENCE
+Senior Software Engineer | EnterpriseTech | Boston, MA | 2018 - Present
+- Architected microservices platform processing 200M+ requests daily
+- Led team of 8 engineers in building scalable backend services
+- Implemented distributed caching and queue systems
+- Designed and built data pipelines using Apache Spark and Airflow
+- Reduced infrastructure costs by $500k through optimization and automation
+- Established engineering standards and best practices across organization
+Principal Engineer | CloudServices | Cambridge, MA | 2014 - 2018
+- Designed and implemented distributed systems architecture
+- Built high-performance APIs using Java and Python
+- Led technical architecture for multiple product lines
+- Mentored senior engineers and influenced technical roadmap
+Software Engineer | DataSystems Inc | Boston, MA | 2012 - 2014
+- Developed data processing pipelines
+- Built RESTful APIs and backend services
+- Worked with distributed databases and message queues
+TECHNICAL SKILLS
+Languages: Python, Java, Scala, SQL
+Frameworks: Django, Flask, Spring Boot, Spark
+Cloud: AWS, GCP, Kubernetes, Docker
+Databases: PostgreSQL, MongoDB, Cassandra, Kafka
+Tools: Terraform, Ansible, Jenkins, Airflow
+EDUCATION
+Master of Science in Computer Science | Harvard University | 2010 - 2012
+Bachelor of Science in Computer Science | MIT | 2006 - 2010
+""",
+            "stage": "Resume Review"
+        },
+        
+        # Frontend Engineers (5 candidates)
+        {
+            "name": "Michelle Kim",
+            "email": "michelle.k@email.com",
+            "position": "Frontend Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Frontend engineer with 4 years of experience building modern, responsive web applications. Expert in React, TypeScript, and component design systems. Passionate about creating exceptional user experiences and writing maintainable code.
+WORK EXPERIENCE
+Frontend Engineer | DesignLab Solutions | Los Angeles, CA | 2020 - Present
+- Built responsive web applications using React and TypeScript serving 500k+ users
+- Developed comprehensive design system with 100+ reusable components
+- Implemented state management using Redux and Context API
+- Optimized application performance reducing bundle size by 35%
+- Created accessible UI components following WCAG 2.1 guidelines
+- Collaborated with UX designers on design system implementation
+Frontend Developer | CreativeWeb Agency | Los Angeles, CA | 2018 - 2020
+- Developed interactive single-page applications using React and Vue.js
+- Built reusable component libraries using styled-components
+- Implemented responsive designs using CSS Grid and Flexbox
+- Worked with REST APIs and GraphQL endpoints
+- Created animations and transitions using CSS and Framer Motion
+TECHNICAL SKILLS
+Languages: JavaScript, TypeScript, HTML, CSS, SASS
+Frameworks: React, Vue.js, Next.js, Redux
+Styling: Tailwind CSS, styled-components, CSS Modules
+Build Tools: Webpack, Vite, Babel, ESLint
+Testing: Jest, React Testing Library, Cypress
+Accessibility: WCAG 2.1, ARIA attributes
+EDUCATION
+Bachelor of Science in Computer Science | UCLA | 2014 - 2018
+""",
+            "stage": "Technical Interview"
+        },
+        {
+            "name": "Daniel Rodriguez",
+            "email": "daniel.r@email.com",
+            "position": "Frontend Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Frontend developer with 5 years of experience creating beautiful, functional user interfaces. Expert in React, TypeScript, and modern CSS. Strong advocate for accessible design and progressive web applications.
+WORK EXPERIENCE
+Frontend Engineer | UserExperience Pro | Seattle, WA | 2019 - Present
+- Built modern web applications using React, TypeScript, and Next.js
+- Led migration of class components to functional components with hooks
+- Created comprehensive design system with 80+ components
+- Implemented progressive web app (PWA) features for offline capability
+- Optimized performance achieving 95+ Lighthouse scores
+- Mentored junior developers on React best practices
+Frontend Developer | Interactive Solutions | Seattle, WA | 2017 - 2019
+- Developed interactive dashboards using React and D3.js
+- Built component libraries and UI kits
+- Implemented state management with Redux and MobX
+- Created data visualizations for business analytics
+Web Developer | Digital Agency | Tacoma, WA | 2015 - 2017
+- Built responsive websites for clients
+- Worked with HTML, CSS, JavaScript
+- Implemented cross-browser compatibility
+TECHNICAL SKILLS
+Languages: JavaScript, TypeScript, HTML, CSS
+Frameworks: React, Next.js, Redux, MobX
+Styling: CSS Modules, Tailwind CSS, styled-components
+Tools: Webpack, Babel, ESLint, Prettier
+Testing: Jest, Testing Library, Enzyme
+EDUCATION
+Bachelor of Science in Computer Science | University of Washington | 2011 - 2015
+""",
+            "stage": "Phone Screen"
+        },
+        {
+            "name": "Sarah Thompson",
+            "email": "sarah.t@email.com",
+            "position": "Frontend Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Frontend engineer with 3 years of experience building responsive web applications and design systems. Expert in React, TypeScript, and creating seamless user experiences. Passionate about clean code and accessibility.
+WORK EXPERIENCE
+Frontend Engineer | TechApp Inc | Austin, TX | 2021 - Present
+- Developed responsive React applications with TypeScript
+- Built reusable component library using styled-components
+- Implemented state management using Redux Toolkit
+- Created responsive layouts using CSS Grid and Flexbox
+- Optimized application performance and bundle size
+- Collaborated with backend team on API integration
+Frontend Developer Intern | StartupStudio | Austin, TX | 2020 - 2021
+- Built React applications using hooks and functional components
+- Created responsive UI components with Material-UI
+- Implemented form validation and error handling
+- Worked with REST APIs and JSON data
+TECHNICAL SKILLS
+Languages: JavaScript, TypeScript, HTML, CSS
+Frameworks: React, Redux, React Router
+Styling: styled-components, Tailwind CSS, Material-UI
+Build Tools: Webpack, Babel, Create React App
+Testing: Jest, React Testing Library
+EDUCATION
+Bachelor of Science in Software Engineering | UT Austin | 2017 - 2021
+""",
+            "stage": "Resume Review"
+        },
+        {
+            "name": "Jonathan Park",
+            "email": "jonathan.p@email.com",
+            "position": "Frontend Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Frontend engineer with 6 years of experience creating pixel-perfect user interfaces. Expert in React, Vue.js, and building scalable frontend architectures. Strong background in animation, interaction design, and performance optimization.
+WORK EXPERIENCE
+Frontend Engineer | DesignFirst Studios | San Francisco, CA | 2018 - Present
+- Built high-performance React applications with Next.js serving 2M+ users
+- Developed comprehensive component library used across multiple products
+- Implemented advanced animations using Framer Motion and GSAP
+- Optimized applications achieving 98+ Lighthouse performance scores
+- Created interactive data visualizations using D3.js and Recharts
+- Led frontend architecture decisions and best practices
+Frontend Developer | VisualTech Inc | San Francisco, CA | 2016 - 2018
+- Developed Vue.js and React applications
+- Built responsive designs for web and mobile
+- Created complex UI components and layouts
+- Implemented state management with Vuex and Redux
+Web Designer | Creative Labs | Palo Alto, CA | 2014 - 2016
+- Designed and developed websites
+- Created user interfaces and prototypes
+- Worked with HTML, CSS, JavaScript
+TECHNICAL SKILLS
+Languages: JavaScript, TypeScript, HTML, CSS, SASS
+Frameworks: React, Vue.js, Next.js, Nuxt.js
+Styling: CSS-in-JS, Tailwind CSS, styled-components
+Animation: Framer Motion, GSAP, CSS animations
+Testing: Jest, React Testing Library, Cypress
+EDUCATION
+Bachelor of Science in Computer Science | San Jose State University | 2010 - 2014
+""",
+            "stage": "Final Round"
+        },
+        {
+            "name": "Emily Chen",
+            "email": "emily.c@email.com",
+            "position": "Frontend Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Frontend developer with 2 years of experience building modern web applications. Proficient in React, TypeScript, and responsive design. Eager to grow skills in modern frontend technologies and best practices.
+WORK EXPERIENCE
+Frontend Engineer | ModernWeb Solutions | Portland, OR | 2022 - Present
+- Built responsive React applications using React and TypeScript
+- Created reusable UI components using styled-components
+- Implemented state management with Redux and Context API
+- Worked with REST APIs for data fetching and mutation
+- Collaborated with designers on UI/UX implementation
+- Participated in code reviews and agile ceremonies
+Software Engineering Intern | TechVentures | Portland, OR | 2021 - 2022
+- Developed React components and pages
+- Built responsive layouts using CSS Grid and Flexbox
+- Implemented user authentication and protected routes
+- Created form components with validation
+PROJECTS
+- E-commerce Platform: Full-stack application with React frontend
+- Task Management App: Real-time collaboration using WebSockets
+- Portfolio Website: Personal site showcasing projects
+TECHNICAL SKILLS
+Languages: JavaScript, TypeScript, HTML, CSS
+Frameworks: React, Redux, React Router
+Styling: styled-components, CSS Modules, Tailwind CSS
+Tools: Webpack, Babel, ESLint, Prettier
+Testing: Jest, React Testing Library
+EDUCATION
+Bachelor of Science in Computer Science | Portland State University | 2018 - 2022
+""",
+            "stage": "Resume Review"
+        },
+        
+        # DevOps Engineers (5 candidates)
+        {
+            "name": "Christopher Lee",
+            "email": "christopher.l@email.com",
+            "position": "DevOps Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+DevOps engineer with 5 years of experience automating deployments, managing cloud infrastructure, and building CI/CD pipelines. Expert in AWS, Terraform, Docker, and Kubernetes. Passionate about infrastructure as code and automation.
+WORK EXPERIENCE
+DevOps Engineer | CloudOps Solutions | Denver, CO | 2020 - Present
+- Automated infrastructure provisioning using Terraform managing 300+ resources
+- Built and maintained Kubernetes clusters with 200+ pods
+- Implemented CI/CD pipelines using Jenkins and GitLab CI reducing deployment time by 70%
+- Set up monitoring and alerting using Prometheus, Grafana, and DataDog
+- Migrated applications from on-premises to AWS reducing costs by 50%
+- Wrote infrastructure automation scripts using Python and Bash
+DevOps Engineer | TechSystems Inc | Denver, CO | 2018 - 2020
+- Managed AWS infrastructure including EC2, ECS, S3, and RDS
+- Automated deployments using Jenkins and Docker containers
+- Implemented infrastructure monitoring using CloudWatch and ELK stack
+- Containerized applications using Docker and orchestrated with ECS
+- Wrote automation scripts for server provisioning
+TECHNICAL SKILLS
+Cloud: AWS (EC2, ECS, S3, RDS, Lambda, CloudFormation), Docker, Kubernetes
+Infrastructure: Terraform, Ansible, CloudFormation
+CI/CD: Jenkins, GitLab CI, GitHub Actions
+Monitoring: Prometheus, Grafana, DataDog, CloudWatch
+Scripting: Python, Bash, Shell scripting
+EDUCATION
+Bachelor of Science in Computer Engineering | Colorado State University | 2014 - 2018
+""",
+            "stage": "Technical Interview"
+        },
+        {
+            "name": "Jessica Martinez",
+            "email": "jessica.m@email.com",
+            "position": "DevOps Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+DevOps engineer specializing in cloud infrastructure and automation. 6 years of experience with AWS, Kubernetes, and infrastructure as code. Proven track record of improving system reliability and reducing operational overhead.
+WORK EXPERIENCE
+Senior DevOps Engineer | CloudScale Technologies | San Diego, CA | 2019 - Present
+- Architected and implemented infrastructure as code using Terraform
+- Managed Kubernetes clusters with 500+ pods across multiple environments
+- Built comprehensive CI/CD pipelines reducing deployment time from 2hrs to 20min
+- Implemented automated monitoring and alerting systems
+- Led migration of 100+ servers from on-premises to AWS
+- Reduced infrastructure costs by $400k through optimization
+DevOps Engineer | EnterpriseOps | San Diego, CA | 2017 - 2019
+- Managed cloud infrastructure on AWS and GCP
+- Automated deployments using Jenkins and Docker
+- Implemented infrastructure monitoring and logging
+- Worked with Terraform and Ansible for automation
+Junior DevOps Engineer | StartupCo | Irvine, CA | 2016 - 2017
+- Managed AWS infrastructure for web applications
+- Built CI/CD pipelines for automated deployments
+- Automated server provisioning and configuration
+TECHNICAL SKILLS
+Cloud: AWS (extensive), GCP, Azure, Kubernetes, Docker
+Infrastructure: Terraform, Ansible, CloudFormation
+CI/CD: Jenkins, GitLab CI, GitHub Actions, CircleCI
+Monitoring: Prometheus, Grafana, DataDog, ELK Stack
+Scripting: Python, Bash, PowerShell
+EDUCATION
+Bachelor of Science in Computer Science | UC San Diego | 2012 - 2016
+""",
+            "stage": "Phone Screen"
+        },
+        {
+            "name": "Thomas Anderson",
+            "email": "thomas.a@email.com",
+            "position": "DevOps Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+DevOps engineer with 4 years of experience in cloud infrastructure and automation. Expert in AWS, Docker, and Terraform. Strong background in CI/CD pipelines and infrastructure monitoring.
+WORK EXPERIENCE
+DevOps Engineer | CloudTech Systems | Atlanta, GA | 2021 - Present
+- Managed cloud infrastructure using AWS including EC2, ECS, S3, RDS
+- Automated infrastructure provisioning using Terraform
+- Built CI/CD pipelines using Jenkins and GitLab CI
+- Implemented containerization using Docker and Kubernetes
+- Set up monitoring and alerting using Prometheus and Grafana
+- Automated deployment processes reducing manual intervention
+DevOps Engineer | TechVentures | Atlanta, GA | 2019 - 2021
+- Managed AWS infrastructure for multiple projects
+- Built deployment pipelines using Jenkins
+- Automated server provisioning using Ansible
+- Implemented infrastructure monitoring and logging
+Systems Administrator | IT Solutions | Atlanta, GA | 2017 - 2019
+- Managed Linux servers and network infrastructure
+- Automated system administration tasks using scripts
+- Implemented backup and disaster recovery procedures
+TECHNICAL SKILLS
+Cloud: AWS (EC2, ECS, S3, RDS, Lambda), Docker, Kubernetes
+Infrastructure: Terraform, Ansible, CloudFormation
+CI/CD: Jenkins, GitLab CI, GitHub Actions
+Monitoring: Prometheus, Grafana, CloudWatch
+Scripting: Python, Bash, PowerShell
+EDUCATION
+Bachelor of Science in Information Technology | Georgia Tech | 2013 - 2017
+""",
+            "stage": "Resume Review"
+        },
+        {
+            "name": "Nicole Brown",
+            "email": "nicole.b@email.com",
+            "position": "DevOps Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+DevOps engineer with 7 years of experience managing cloud infrastructure and building scalable systems. Expert in AWS, Kubernetes, and infrastructure automation. Proven ability to improve system reliability and reduce costs.
+WORK EXPERIENCE
+Senior DevOps Engineer | CloudNative Solutions | Seattle, WA | 2018 - Present
+- Architected infrastructure as code managing 400+ AWS resources
+- Led migration to Kubernetes reducing deployment time by 65%
+- Built comprehensive monitoring using Prometheus, Grafana, and DataDog
+- Automated infrastructure provisioning using Terraform and Ansible
+- Optimized cloud costs reducing annual spend by $600k
+- Established best practices for CI/CD and deployment automation
+DevOps Engineer | ScaleTech | Seattle, WA | 2015 - 2018
+- Managed Kubernetes clusters with 1000+ pods
+- Built CI/CD pipelines using Jenkins and GitLab
+- Implemented infrastructure monitoring and alerting
+- Containerized legacy applications using Docker
+- Automated server provisioning and configuration
+Systems Administrator | Enterprise Systems | Bellevue, WA | 2013 - 2015
+- Managed Linux server infrastructure
+- Automated system administration tasks
+- Implemented backup and monitoring systems
+TECHNICAL SKILLS
+Cloud: AWS, GCP, Kubernetes, Docker
+Infrastructure: Terraform, Ansible, CloudFormation, Puppet
+CI/CD: Jenkins, GitLab CI, GitHub Actions, Travis CI
+Monitoring: Prometheus, Grafana, DataDog, ELK Stack
+Scripting: Python, Bash, Go, Shell scripting
+EDUCATION
+Master of Science in Computer Science | University of Washington | 2011 - 2013
+Bachelor of Science in Computer Science | UW | 2007 - 2011
+""",
+            "stage": "Final Round"
+        },
+        {
+            "name": "David Kim",
+            "email": "david.k@email.com",
+            "position": "DevOps Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+DevOps engineer with 3 years of experience in cloud infrastructure and automation. Proficient in AWS, Docker, and CI/CD pipelines. Passionate about infrastructure as code and improving system reliability.
+WORK EXPERIENCE
+DevOps Engineer | StartupCloud | Austin, TX | 2022 - Present
+- Managed AWS infrastructure including EC2, ECS, S3, and RDS
+- Automated deployments using Docker containers and ECS
+- Built CI/CD pipelines using Jenkins and GitHub Actions
+- Implemented infrastructure as code using Terraform
+- Set up monitoring and alerting using CloudWatch and DataDog
+DevOps Intern | TechStart Inc | Austin, TX | 2021 - 2022
+- Assisted with AWS infrastructure management
+- Automated deployments using Jenkins
+- Wrote infrastructure automation scripts using Bash and Python
+- Implemented monitoring and logging systems
+PROJECTS
+- Infrastructure as Code: Terraform modules for AWS resources
+- CI/CD Pipeline: Automated deployment pipeline using Jenkins
+- Monitoring Dashboard: Prometheus and Grafana setup
+TECHNICAL SKILLS
+Cloud: AWS, Docker, Kubernetes
+Infrastructure: Terraform, Ansible
+CI/CD: Jenkins, GitHub Actions
+Monitoring: Prometheus, Grafana, CloudWatch
+Scripting: Python, Bash
+EDUCATION
+Bachelor of Science in Computer Science | UT Austin | 2018 - 2022
+""",
+            "stage": "Resume Review"
+        },
+        
+        # Data Engineers (5 candidates)
+        {
+            "name": "Jennifer Park",
+            "email": "jennifer.p@email.com",
+            "position": "Data Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Data engineer with 5 years of experience building scalable data pipelines and ETL processes. Expert in Python, SQL, Apache Spark, and cloud data warehouses. Strong background in processing large-scale datasets and enabling data-driven decision making.
+WORK EXPERIENCE
+Senior Data Engineer | DataFlow Analytics | New York, NY | 2020 - Present
+- Built data pipelines processing 5TB+ daily using Apache Spark and Airflow
+- Designed data lake architecture on AWS S3 reducing storage costs by 45%
+- Developed ETL pipelines using Python, Pandas, and SQL
+- Optimized Spark jobs reducing processing time by 50%
+- Implemented data quality checks using Great Expectations
+- Worked with data warehouses including Redshift and Snowflake
+Data Engineer | Analytics Solutions | New York, NY | 2018 - 2020
+- Built ETL pipelines processing millions of records daily
+- Developed data processing workflows using Python and Spark
+- Worked with PostgreSQL, MongoDB, and Elasticsearch
+- Implemented data validation and quality checks
+- Created data pipelines for business intelligence
+Junior Data Engineer | DataStart Inc | Brooklyn, NY | 2017 - 2018
+- Developed Python scripts for data extraction and transformation
+- Built automated data pipelines for daily updates
+- Performed data cleaning and validation
+- Created data visualizations using Tableau
+TECHNICAL SKILLS
+Programming: Python, SQL, Scala
+Big Data: Apache Spark, Hadoop, Airflow
+Databases: PostgreSQL, MongoDB, Elasticsearch, Redis
+Cloud: AWS (S3, Redshift, EMR, Glue)
+Data Warehouses: Redshift, Snowflake, BigQuery
+Visualization: Tableau, Looker
+EDUCATION
+Master of Science in Data Science | Columbia University | 2015 - 2017
+Bachelor of Science in Computer Science | NYU | 2011 - 2015
+""",
+            "stage": "Final Round"
+        },
+        {
+            "name": "Michael Chang",
+            "email": "michael.c@email.com",
+            "position": "Data Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Data engineer specializing in real-time data processing and big data technologies. 6 years of experience with Spark, Kafka, and cloud data platforms. Proven track record of building scalable data architectures.
+WORK EXPERIENCE
+Data Engineer | RealTime Analytics | San Francisco, CA | 2019 - Present
+- Built real-time data pipelines processing 10TB+ daily using Spark and Kafka
+- Designed streaming data architecture on AWS Kinesis and S3
+- Developed batch processing pipelines using Airflow and Python
+- Optimized data queries reducing processing time by 60%
+- Implemented data quality monitoring using custom frameworks
+- Worked with data warehouses including Snowflake and Redshift
+Data Engineer | BigData Corp | San Francisco, CA | 2017 - 2019
+- Developed ETL pipelines using Python and Apache Spark
+- Worked with Kafka for real-time data streaming
+- Built data processing workflows processing petabytes of data
+- Implemented data validation and quality checks
+Junior Data Engineer | AnalyticsTech | Mountain View, CA | 2016 - 2017
+- Developed Python scripts for data processing
+- Built automated ETL pipelines
+- Worked with SQL databases for data analysis
+TECHNICAL SKILLS
+Programming: Python, SQL, Scala, Java
+Big Data: Apache Spark, Kafka, Airflow, Hadoop
+Databases: PostgreSQL, MongoDB, Redis
+Cloud: AWS (S3, Kinesis, Redshift, EMR), GCP
+Data Warehouses: Snowflake, Redshift, BigQuery
+EDUCATION
+Master of Science in Data Engineering | UC Berkeley | 2014 - 2016
+Bachelor of Science in Computer Science | Stanford | 2010 - 2014
+""",
+            "stage": "Technical Interview"
+        },
+        {
+            "name": "Stephanie Wu",
+            "email": "stephanie.w@email.com",
+            "position": "Data Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Data engineer with 4 years of experience building data pipelines and ETL processes. Expert in Python, SQL, and cloud data technologies. Strong background in data quality and analytics infrastructure.
+WORK EXPERIENCE
+Data Engineer | Analytics Solutions | Chicago, IL | 2021 - Present
+- Built data pipelines processing 2TB+ daily using Python and Airflow
+- Developed ETL processes extracting data from multiple sources
+- Implemented data quality checks and validation frameworks
+- Worked with data warehouses including Snowflake and BigQuery
+- Created data visualizations and reports for business stakeholders
+- Optimized SQL queries improving performance by 40%
+Data Engineer | DataTech Inc | Chicago, IL | 2019 - 2021
+- Developed data processing pipelines using Python and pandas
+- Built automated ETL workflows processing millions of records
+- Worked with PostgreSQL, MongoDB, and Elasticsearch
+- Implemented data validation and quality monitoring
+- Created dashboards for data monitoring
+TECHNICAL SKILLS
+Programming: Python, SQL, R
+Big Data: Spark, Airflow, Kafka
+Databases: PostgreSQL, MongoDB, Elasticsearch, Redis
+Cloud: AWS (S3, Redshift), GCP (BigQuery)
+Data Warehouses: Snowflake, BigQuery
+Visualization: Tableau, Looker, Metabase
+EDUCATION
+Bachelor of Science in Computer Science | Northwestern University | 2015 - 2019
+""",
+            "stage": "Phone Screen"
+        },
+        {
+            "name": "Ryan Kim",
+            "email": "ryan.k@email.com",
+            "position": "Data Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Data engineer with 7 years of experience in big data processing and analytics infrastructure. Expert in Spark, Kafka, and data warehousing solutions. Proven track record of building scalable data architectures.
+WORK EXPERIENCE
+Senior Data Engineer | BigData Systems | Seattle, WA | 2018 - Present
+- Built distributed data pipelines processing 20TB+ daily using Spark and Kafka
+- Designed data lake architecture on AWS S3 using Parquet format
+- Implemented real-time streaming pipelines using Kafka and Flink
+- Optimized Spark jobs reducing compute costs by 50%
+- Built data quality framework using Great Expectations
+- Worked extensively with Snowflake and Redshift
+Data Engineer | DataFlow Inc | Seattle, WA | 2016 - 2018
+- Developed ETL pipelines using Python and Spark
+- Built batch processing workflows processing terabytes of data
+- Implemented data validation and quality checks
+- Worked with data warehouses and data lakes
+Data Analyst | Analytics Firm | Bellevue, WA | 2015 - 2016
+- Analyzed large datasets using Python and SQL
+- Created data visualizations and reports
+- Built data processing scripts
+TECHNICAL SKILLS
+Programming: Python, SQL, Scala, Java
+Big Data: Apache Spark, Kafka, Flink, Airflow, Hadoop
+Databases: PostgreSQL, MongoDB, Cassandra, Redis
+Cloud: AWS (S3, Redshift, EMR, Kinesis), GCP
+Data Warehouses: Snowflake, Redshift, BigQuery, Databricks
+EDUCATION
+Master of Science in Data Science | University of Washington | 2013 - 2015
+Bachelor of Science in Computer Science | UW | 2009 - 2013
+""",
+            "stage": "Resume Review"
+        },
+        {
+            "name": "Patricia Garcia",
+            "email": "patricia.g@email.com",
+            "position": "Data Engineer",
+            "resume_text": """
+PROFESSIONAL SUMMARY
+Data engineer with 3 years of experience building data pipelines and ETL processes. Proficient in Python, SQL, and cloud data platforms. Passionate about data quality and building scalable analytics infrastructure.
+WORK EXPERIENCE
+Data Engineer | Analytics Start | Boston, MA | 2022 - Present
+- Built data pipelines using Python, Airflow, and SQL
+- Developed ETL processes extracting data from multiple APIs
+- Implemented data quality checks and validation
+- Worked with PostgreSQL and MongoDB databases
+- Created dashboards for data monitoring and visualization
+- Optimized database queries improving performance
+Data Engineer Intern | DataTech Solutions | Boston, MA | 2021 - 2022
+- Assisted with building ETL pipelines using Python
+- Developed data processing scripts using pandas
+- Worked with SQL databases for data analysis
+- Created data visualizations using Tableau
+PROJECTS
+- ETL Pipeline: Automated data processing pipeline using Airflow
+- Data Warehouse: Built data warehouse on Snowflake
+- Analytics Dashboard: Created dashboards using Looker
+TECHNICAL SKILLS
+Programming: Python, SQL, R
+Big Data: Spark, Airflow
+Databases: PostgreSQL, MongoDB, Redis
+Cloud: AWS (S3, Redshift)
+Data Warehouses: Snowflake, BigQuery
+Visualization: Tableau, Looker
+EDUCATION
+Bachelor of Science in Computer Science | Boston University | 2018 - 2022
+""",
+            "stage": "Resume Review"
+        }
+    ]
+    
+    # Add all additional candidates to recruiter 1
+    for candidate_data in additional_candidates:
+        candidate_data["recruiter_id"] = recruiters[0].id
+        candidate = models.Candidate(**candidate_data)
+        db.add(candidate)
+    
     db.commit()
+    total_candidates = len(sample_candidates) + len(sample_candidates_r2) + len(additional_candidates)
     print("Database initialized with sample data!")
-    print(f"Created {len(recruiters)} recruiters and {len(sample_candidates) + len(sample_candidates_r2)} candidates")
+    print(f"Created {len(recruiters)} recruiters and {total_candidates} candidates")
     
 except Exception as e:
     db.rollback()

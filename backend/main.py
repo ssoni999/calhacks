@@ -147,6 +147,40 @@ def get_recruiter_kpis(recruiter_id: int, db: Session = Depends(get_db)):
     avg_skills_score = sum(skill_scores) / len(skill_scores) if skill_scores else 0
     avg_overall_score = sum(overall_scores) / len(overall_scores) if overall_scores else 0
     
+    # Calculate scores by position/category
+    scores_by_position = {}
+    for candidate in candidates:
+        if candidate.position not in scores_by_position:
+            scores_by_position[candidate.position] = {
+                "experience_scores": [],
+                "skills_scores": [],
+                "overall_scores": [],
+                "count": 0
+            }
+        
+        if candidate.experience_score is not None:
+            scores_by_position[candidate.position]["experience_scores"].append(candidate.experience_score)
+        if candidate.skills_score is not None:
+            scores_by_position[candidate.position]["skills_scores"].append(candidate.skills_score)
+        if candidate.overall_score is not None:
+            scores_by_position[candidate.position]["overall_scores"].append(candidate.overall_score)
+        
+        scores_by_position[candidate.position]["count"] += 1
+    
+    # Calculate averages for each position
+    position_averages = {}
+    for position, scores in scores_by_position.items():
+        exp_avg = sum(scores["experience_scores"]) / len(scores["experience_scores"]) if scores["experience_scores"] else 0
+        skills_avg = sum(scores["skills_scores"]) / len(scores["skills_scores"]) if scores["skills_scores"] else 0
+        overall_avg = sum(scores["overall_scores"]) / len(scores["overall_scores"]) if scores["overall_scores"] else 0
+        
+        position_averages[position] = {
+            "count": scores["count"],
+            "avg_experience": round(exp_avg, 2),
+            "avg_skills": round(skills_avg, 2),
+            "avg_overall": round(overall_avg, 2)
+        }
+    
     return {
         "recruiter_id": recruiter_id,
         "total_candidates": total_candidates,
@@ -162,7 +196,8 @@ def get_recruiter_kpis(recruiter_id: int, db: Session = Depends(get_db)):
             "skills": round(avg_skills_score, 2),
             "overall": round(avg_overall_score, 2)
         },
-        "conversion_rate": round((offers / total_candidates * 100) if total_candidates > 0 else 0, 2)
+        "conversion_rate": round((offers / total_candidates * 100) if total_candidates > 0 else 0, 2),
+        "scores_by_position": position_averages
     }
 
 @app.get("/api/candidates/top-10")
