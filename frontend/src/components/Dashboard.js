@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import CandidateProfileModal from './CandidateProfileModal';
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
 function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
   const [kpis, setKpis] = useState(null);
   const [selectedPosition, setSelectedPosition] = useState('all');
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
 
   useEffect(() => {
     if (recruiterId) {
@@ -154,7 +156,14 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
                 .slice(0, 10)
                 .map(candidate => (
                 <tr key={candidate.id} style={{ opacity: candidate.is_rejected ? 0.5 : 1 }}>
-                  <td>{candidate.name}</td>
+                  <td>
+                    <span 
+                      onClick={() => setSelectedCandidate(candidate)}
+                      style={{ cursor: 'pointer', color: '#667eea', textDecoration: 'underline' }}
+                    >
+                      {candidate.name}
+                    </span>
+                  </td>
                   <td>{candidate.position}</td>
                   <td>
                     <select 
@@ -195,6 +204,13 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
           </table>
         </div>
       </div>
+
+      {selectedCandidate && (
+        <CandidateProfileModal 
+          candidate={selectedCandidate} 
+          onClose={() => setSelectedCandidate(null)} 
+        />
+      )}
     </div>
   );
 }

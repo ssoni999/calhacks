@@ -25,7 +25,9 @@ def load_job_description(position: str) -> str:
         "Senior Software Engineer": "senior_software_engineer.md",
         "Frontend Engineer": "frontend_engineer.md",
         "DevOps Engineer": "devops_engineer.md",
-        "Data Engineer": "data_engineer.md"
+        "Data Engineer": "data_engineer.md",
+        "Backend Engineer": "backend_engineer.md",
+        "Full Stack Developer": "full_stack_developer.md"
     }
     
     filename = position_map.get(position)
@@ -45,7 +47,9 @@ def load_rubric(position: str) -> str:
         "Senior Software Engineer": "senior_software_engineer_rubric.md",
         "Frontend Engineer": "frontend_engineer_rubric.md",
         "DevOps Engineer": "devops_engineer_rubric.md",
-        "Data Engineer": "data_engineer_rubric.md"
+        "Data Engineer": "data_engineer_rubric.md",
+        "Backend Engineer": "backend_engineer_rubric.md",
+        "Full Stack Developer": "full_stack_developer_rubric.md"
     }
     
     filename = position_map.get(position)

@@ -18,7 +18,13 @@ fi
 echo "Starting backend server..."
 cd backend
 source venv/bin/activate
-python init_db.py 2>/dev/null || echo "Database already initialized"
+
+# Only init DB if it doesn't exist
+if [ ! -f "recruitai.db" ]; then
+    echo "Initializing database..."
+    python init_db.py
+fi
+
 python main.py &
 BACKEND_PID=$!
 cd ..

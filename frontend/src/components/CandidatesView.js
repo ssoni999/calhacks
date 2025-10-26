@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import CandidateProfileModal from './CandidateProfileModal';
 
 function CandidatesView({ candidates, onStageUpdate }) {
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
   const stages = [
     { name: 'Resume Review', color: '#667eea' },
     { name: 'Phone Screen', color: '#f093fb' },
@@ -33,7 +35,11 @@ function CandidatesView({ candidates, onStageUpdate }) {
                     borderColor: candidate.is_rejected ? 'rgba(239, 68, 68, 0.5)' : 'rgba(100, 116, 139, 0.3)'
                   }}
                 >
-                  <div className="candidate-name">
+                  <div 
+                    className="candidate-name"
+                    onClick={() => setSelectedCandidate(candidate)}
+                    style={{ cursor: 'pointer', color: '#667eea' }}
+                  >
                     {candidate.name}
                     {candidate.is_rejected && <span style={{ color: '#dc3545', marginLeft: '0.5rem', fontSize: '0.85rem' }}>(Rejected)</span>}
                   </div>
@@ -50,6 +56,13 @@ function CandidatesView({ candidates, onStageUpdate }) {
           </div>
         ))}
       </div>
+
+      {selectedCandidate && (
+        <CandidateProfileModal 
+          candidate={selectedCandidate} 
+          onClose={() => setSelectedCandidate(null)} 
+        />
+      )}
     </div>
   );
 }

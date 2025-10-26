@@ -105,7 +105,7 @@ def get_candidates(
         query = query.filter(models.Candidate.recruiter_id == recruiter_id)
     if stage:
         query = query.filter(models.Candidate.stage == stage)
-    return query.all()
+    return query.order_by(models.Candidate.created_at.desc()).all()
 
 @app.put("/api/candidates/{candidate_id}", response_model=schemas.Candidate)
 def update_candidate(
