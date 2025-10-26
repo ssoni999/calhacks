@@ -20,11 +20,8 @@ const ChatbotView = ({ recruiterId, candidates }) => {
   // Quick prompts for easy access
   const quickPrompts = [
     "Generate interview questions for a senior backend engineer",
-    "What are common red flags to watch for in interviews?",
-    "How should I structure my technical interview process?",
     "Compare my top 3 candidates",
     "Should I move forward with [candidate name]?",
-    "Generate behavioral interview questions"
   ];
 
   const scrollToBottom = () => {
