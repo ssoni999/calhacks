@@ -121,6 +121,8 @@ def update_candidate(
         db_candidate.stage = candidate.stage
     if candidate.notes:
         db_candidate.notes = candidate.notes
+    if candidate.is_rejected is not None:
+        db_candidate.is_rejected = candidate.is_rejected
     
     db.commit()
     db.refresh(db_candidate)
@@ -206,7 +208,7 @@ def get_top_10_candidates(
     metric: str = "overall",
     db: Session = Depends(get_db)
 ):
-    query = db.query(models.Candidate)
+    query = db.query(models.Candidate).filter(models.Candidate.is_rejected == False)
     if recruiter_id:
         query = query.filter(models.Candidate.recruiter_id == recruiter_id)
     

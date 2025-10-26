@@ -4,7 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
-function Dashboard({ recruiterId, candidates, onStageUpdate }) {
+function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
   const [kpis, setKpis] = useState(null);
   const [tooltipStates, setTooltipStates] = useState({});
 
@@ -205,11 +205,15 @@ function Dashboard({ recruiterId, candidates, onStageUpdate }) {
                 <th>Position</th>
                 <th>Stage</th>
                 <th>Overall Score</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {candidates.slice(0, 10).map(candidate => (
-                <tr key={candidate.id}>
+              {candidates
+                .sort((a, b) => (a.is_rejected === b.is_rejected ? 0 : a.is_rejected ? 1 : -1))
+                .slice(0, 10)
+                .map(candidate => (
+                <tr key={candidate.id} style={{ backgroundColor: candidate.is_rejected ? '#ffe6e6' : 'transparent' }}>
                   <td>{candidate.name}</td>
                   <td>{candidate.position}</td>
                   <td>
@@ -217,6 +221,7 @@ function Dashboard({ recruiterId, candidates, onStageUpdate }) {
                       value={candidate.stage} 
                       onChange={(e) => onStageUpdate(candidate.id, e.target.value)}
                       style={{ padding: '0.5rem', borderRadius: '8px', border: '1px solid #ddd' }}
+                      disabled={candidate.is_rejected}
                     >
                       <option>Resume Review</option>
                       <option>Phone Screen</option>
@@ -227,6 +232,22 @@ function Dashboard({ recruiterId, candidates, onStageUpdate }) {
                   </td>
                   <td>
                     <span className="candidate-score">{candidate.overall_score || 'Pending'}</span>
+                  </td>
+                  <td>
+                    <button 
+                      onClick={() => onRejectToggle(candidate.id, !candidate.is_rejected)}
+                      style={{
+                        padding: '0.5rem 1rem',
+                        borderRadius: '8px',
+                        border: 'none',
+                        cursor: 'pointer',
+                        background: candidate.is_rejected ? '#28a745' : '#dc3545',
+                        color: 'white',
+                        fontWeight: '600'
+                      }}
+                    >
+                      {candidate.is_rejected ? 'Unreject' : 'Reject'}
+                    </button>
                   </td>
                 </tr>
               ))}

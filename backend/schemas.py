@@ -28,6 +28,7 @@ class CandidateCreate(CandidateBase):
 class CandidateUpdate(BaseModel):
     stage: Optional[str] = None
     notes: Optional[str] = None
+    is_rejected: Optional[bool] = None
 
 class Candidate(CandidateBase):
     id: int
@@ -40,6 +41,7 @@ class Candidate(CandidateBase):
     cultural_fit_score: Optional[float] = None
     analysis_notes: str
     recruiter_id: int
+    is_rejected: bool = False
     
     class Config:
         from_attributes = True

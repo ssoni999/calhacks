@@ -10,7 +10,9 @@ function CandidatesView({ candidates, onStageUpdate }) {
   ];
 
   const getCandidatesByStage = (stage) => {
-    return candidates.filter(c => c.stage === stage);
+    return candidates
+      .filter(c => c.stage === stage)
+      .sort((a, b) => (a.is_rejected === b.is_rejected ? 0 : a.is_rejected ? 1 : -1));
   };
 
   return (
@@ -23,8 +25,18 @@ function CandidatesView({ candidates, onStageUpdate }) {
             </div>
             <div className="stage-content">
               {getCandidatesByStage(stage.name).map(candidate => (
-                <div key={candidate.id} className="candidate-item">
-                  <div className="candidate-name">{candidate.name}</div>
+                <div 
+                  key={candidate.id} 
+                  className="candidate-item"
+                  style={{ 
+                    backgroundColor: candidate.is_rejected ? '#ffe6e6' : 'white',
+                    opacity: candidate.is_rejected ? 0.7 : 1
+                  }}
+                >
+                  <div className="candidate-name">
+                    {candidate.name}
+                    {candidate.is_rejected && <span style={{ color: '#dc3545', marginLeft: '0.5rem', fontSize: '0.85rem' }}>(Rejected)</span>}
+                  </div>
                   <div className="candidate-email">{candidate.email}</div>
                   <div className="candidate-score">{candidate.overall_score || 'Pending'} pts</div>
                   {candidate.position && (

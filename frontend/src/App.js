@@ -66,6 +66,15 @@ function App() {
     }
   };
 
+  const handleRejectToggle = async (candidateId, isRejected) => {
+    try {
+      await axios.put(`${API_BASE}/candidates/${candidateId}`, { is_rejected: isRejected });
+      fetchCandidates(selectedRecruiter);
+    } catch (error) {
+      console.error('Error toggling rejection:', error);
+    }
+  };
+
   const handleRecruiterChange = (e) => {
     setSelectedRecruiter(parseInt(e.target.value));
   };
@@ -118,6 +127,7 @@ function App() {
             recruiterId={selectedRecruiter} 
             candidates={candidates}
             onStageUpdate={handleStageUpdate}
+            onRejectToggle={handleRejectToggle}
           />
         )}
         {view === 'candidates' && (
