@@ -6,6 +6,7 @@ const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
 function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
   const [kpis, setKpis] = useState(null);
+  const [selectedPosition, setSelectedPosition] = useState('all');
 
   useEffect(() => {
     if (recruiterId) {
@@ -33,6 +34,20 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
   if (!kpis) {
     return <div>Loading...</div>;
   }
+
+  // Get the selected position's skills score
+  const getSelectedPositionSkillsScore = () => {
+    if (selectedPosition === 'all' || !kpis.scores_by_position || !kpis.scores_by_position[selectedPosition]) {
+      return kpis.average_scores.skills;
+    }
+    return kpis.scores_by_position[selectedPosition].avg_skills;
+  };
+
+  const selectedSkillsScore = getSelectedPositionSkillsScore();
+
+  // Get available positions for dropdown
+  const availablePositions = kpis.scores_by_position ? Object.keys(kpis.scores_by_position) : [];
+  const allPositions = ['all', ...availablePositions];
 
   const pipelineData = [
     { stage: 'Resume Review', count: kpis.pipeline_breakdown.resume_review, fill: '#667eea' },
@@ -68,10 +83,34 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
         </div>
         <div className="kpi-card">
           <div className="kpi-header">
-            <div className="kpi-label">Avg Skills Score</div>
+            <div className="kpi-label">
+              Avg Skills Score
+              {availablePositions.length > 0 && (
+                <select 
+                  value={selectedPosition} 
+                  onChange={(e) => setSelectedPosition(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
+                  style={{ 
+                    marginLeft: '0.5rem', 
+                    padding: '0.25rem 0.5rem',
+                    fontSize: '0.75rem',
+                    borderRadius: '4px',
+                    border: '1px solid rgba(100, 116, 139, 0.3)',
+                    background: 'rgba(15, 23, 42, 0.6)',
+                    color: '#cbd5e1',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <option value="all">All Positions</option>
+                  {availablePositions.map(pos => (
+                    <option key={pos} value={pos}>{pos}</option>
+                  ))}
+                </select>
+              )}
+            </div>
             <span className="info-icon" title={kpiDefinitions.avgSkills}>ℹ️</span>
           </div>
-          <div className="kpi-value">{kpis.average_scores.skills}</div>
+          <div className="kpi-value">{selectedSkillsScore}</div>
         </div>
         <div className="kpi-card">
           <div className="kpi-header">
@@ -81,42 +120,6 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
           <div className="kpi-value">{kpis.average_scores.overall}</div>
         </div>
       </div>
-
-      {kpis.scores_by_position && Object.keys(kpis.scores_by_position).length > 0 && (
-        <div className="card">
-          <h3>Average Scores by Job Category</h3>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem' }}>
-            {Object.entries(kpis.scores_by_position).map(([position, scores]) => (
-              <div key={position} style={{ 
-                padding: '1rem', 
-                background: 'rgba(15, 23, 42, 0.6)', 
-                borderRadius: '8px',
-                borderLeft: '4px solid #667eea'
-              }}>
-                <h4 style={{ margin: '0 0 0.75rem 0', color: '#f1f5f9', fontSize: '1rem' }}>{position}</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>Avg Experience:</span>
-                    <strong style={{ color: '#667eea' }}>{scores.avg_experience}</strong>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>Avg Skills:</span>
-                    <strong style={{ color: '#667eea' }}>{scores.avg_skills}</strong>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>Avg Overall:</span>
-                    <strong style={{ color: '#667eea' }}>{scores.avg_overall}</strong>
-                  </div>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(100, 116, 139, 0.3)' }}>
-                    <span style={{ color: '#cbd5e1', fontSize: '0.85rem' }}>Candidates:</span>
-                    <strong style={{ color: '#f1f5f9' }}>{scores.count}</strong>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       <div className="card">
         <h3>Pipeline Overview</h3>
