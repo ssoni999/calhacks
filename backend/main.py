@@ -10,6 +10,7 @@ import os
 from database import SessionLocal, engine, Base
 import models
 import schemas
+from ai_scorer import score_candidate_with_ai, score_all_candidates_for_position
 
 # Set datetime for models
 from sqlalchemy import event
@@ -214,6 +215,31 @@ def analyze_resume(resume_text: str, position: str) -> dict:
         "overall_score": round(overall_score),
         "notes": notes
     }
+
+# AI Scoring endpoints
+class AIScoreRequest(BaseModel):
+    candidate_id: int
+    job_description: str
+    rubric: str
+
+class AIScoreBatchRequest(BaseModel):
+    position: str
+    job_description: str
+    rubric: str
+
+@app.post("/api/ai/score-candidate")
+def ai_score_candidate(request: AIScoreRequest):
+    """Score a single candidate using AI"""
+    result = score_candidate_with_ai(request.candidate_id, request.job_description, request.rubric)
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+    return result
+
+@app.post("/api/ai/score-position")
+def ai_score_position(request: AIScoreBatchRequest):
+    """Score all candidates for a position using AI"""
+    result = score_all_candidates_for_position(request.position, request.job_description, request.rubric)
+    return result
 
 if __name__ == "__main__":
     import uvicorn

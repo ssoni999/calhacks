@@ -37,6 +37,7 @@ class Candidate(CandidateBase):
     skills_score: Optional[float] = None
     education_score: Optional[float] = None
     overall_score: Optional[float] = None
+    cultural_fit_score: Optional[float] = None
     analysis_notes: str
     recruiter_id: int
     

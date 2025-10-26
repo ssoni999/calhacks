@@ -29,6 +29,7 @@ class Candidate(Base):
     skills_score = Column(Float, default=None, nullable=True)
     education_score = Column(Float, default=None, nullable=True)
     overall_score = Column(Float, default=None, nullable=True)
+    cultural_fit_score = Column(Float, default=None, nullable=True)
     analysis_notes = Column(Text, default="")
     
     recruiter_id = Column(Integer, ForeignKey("recruiters.id"))
