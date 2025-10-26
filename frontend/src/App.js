@@ -82,21 +82,23 @@ function App() {
   return (
     <div className="App">
       <header className="app-header">
-        <div className="header-content">
-          <h1>RecruitAI</h1>
-          <p>Streamlined Hiring Platform</p>
-        </div>
-        <div className="header-controls">
-          <select value={selectedRecruiter || ''} onChange={handleRecruiterChange}>
-            {recruiters.map(recruiter => (
-              <option key={recruiter.id} value={recruiter.id}>
-                {recruiter.name}
-              </option>
-            ))}
-          </select>
-          <button onClick={() => setShowAddModal(true)} className="btn-primary">
-            + Add Candidate
-          </button>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div className="header-content">
+            <h1>RecruitAI</h1>
+            <p>Streamlined Hiring Platform</p>
+          </div>
+          <div className="header-controls">
+            <select value={selectedRecruiter || ''} onChange={handleRecruiterChange}>
+              {recruiters.map(recruiter => (
+                <option key={recruiter.id} value={recruiter.id}>
+                  {recruiter.name}
+                </option>
+              ))}
+            </select>
+            <button onClick={() => setShowAddModal(true)} className="btn-primary">
+              + Add Candidate
+            </button>
+          </div>
         </div>
       </header>
 

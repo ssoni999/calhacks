@@ -8,7 +8,7 @@ Transform the recruiting funnel from resumes to hires with AI-powered insights a
 - **AI-Powered Resume Analysis**: Automatically score candidates using semantic search and keyword analysis
 - **Detailed Resume Processing**: Comprehensive resume text analysis with extended candidate profiles
 - **Pipeline Management**: Track candidates through Resume Review, Phone Screen, Technical Interview, Final Round, and Offer stages
-- **Recruiter Dashboard**: Visualize KPIs including conversion rates, average scores, and pipeline breakdown
+- **Recruiter Dashboard**: Visualize KPIs including hire rates, average scores, and pipeline breakdown
 - **Top 10 Applicants**: Identify the best candidates for each KPI (overall, experience, skills)
 - **Real-time Analytics**: Charts and graphs for tracking recruiting performance
 - **Modern UI**: Beautiful, responsive design with gradient themes
@@ -133,7 +133,7 @@ The system analyzes resumes by:
 - **Total Candidates**: Number of candidates in the pipeline
 - **Pipeline Breakdown**: Candidates in each stage
 - **Average Scores**: Mean scores across all candidates
-- **Conversion Rate**: Percentage moving from resume to offer
+- **Hire Rate**: Percentage moving from resume to offer
 
 ## 🎨 Features Breakdown
 

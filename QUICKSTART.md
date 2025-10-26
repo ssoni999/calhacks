@@ -60,7 +60,7 @@ npm start
 ## 🎯 Using the Application
 
 ### 1. Dashboard View
-- View KPIs (total candidates, conversion rate, average scores)
+- View KPIs (total candidates, hire rate, average scores)
 - See pipeline breakdown chart
 - Review recent candidates with stage updates
 

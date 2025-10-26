@@ -29,8 +29,8 @@ function CandidatesView({ candidates, onStageUpdate }) {
                   key={candidate.id} 
                   className="candidate-item"
                   style={{ 
-                    backgroundColor: candidate.is_rejected ? '#ffe6e6' : 'white',
-                    opacity: candidate.is_rejected ? 0.7 : 1
+                    opacity: candidate.is_rejected ? 0.5 : 1,
+                    borderColor: candidate.is_rejected ? 'rgba(239, 68, 68, 0.5)' : 'rgba(100, 116, 139, 0.3)'
                   }}
                 >
                   <div className="candidate-name">
@@ -40,7 +40,7 @@ function CandidatesView({ candidates, onStageUpdate }) {
                   <div className="candidate-email">{candidate.email}</div>
                   <div className="candidate-score">{candidate.overall_score || 'Pending'} pts</div>
                   {candidate.position && (
-                    <div style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#666' }}>
+                    <div style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#94a3b8' }}>
                       {candidate.position}
                     </div>
                   )}

@@ -22,7 +22,7 @@
 
 ### 3. Recruiter KPI Dashboard
 - **Total Candidates**: Count of all candidates
-- **Conversion Rate**: Percentage from resume to offer
+- **Hire Rate**: Percentage from resume to offer
 - **Average Scores**: Mean experience, skills, and overall scores
 - **Pipeline Breakdown**: Candidates in each stage
 - Interactive bar charts and visualizations

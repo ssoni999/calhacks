@@ -43,9 +43,11 @@ function KPIView({ recruiterId }) {
             style={{ 
               padding: '0.75rem', 
               borderRadius: '8px', 
-              border: '1px solid #ddd',
+              border: '1px solid rgba(100, 116, 139, 0.4)',
               fontSize: '1rem',
-              fontWeight: '600'
+              fontWeight: '600',
+              background: 'rgba(15, 23, 42, 0.6)',
+              color: '#f1f5f9'
             }}
           >
             <option value="overall">Overall Score</option>
@@ -56,12 +58,12 @@ function KPIView({ recruiterId }) {
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey={selectedMetric} fill="#667eea" />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(100, 116, 139, 0.3)" />
+            <XAxis dataKey="name" angle={-45} textAnchor="end" height={100} stroke="#cbd5e1" />
+            <YAxis stroke="#cbd5e1" />
+            <Tooltip contentStyle={{ background: 'rgba(15, 23, 42, 0.9)', border: '1px solid rgba(100, 116, 139, 0.3)', borderRadius: '8px', color: '#f1f5f9' }} cursor={{ fill: 'rgba(59, 130, 246, 0.1)' }} />
+            <Legend wrapperStyle={{ color: '#cbd5e1' }} />
+            <Bar dataKey={selectedMetric} fill="#667eea" activeBar={{ fill: '#8b9aee' }} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -108,11 +110,11 @@ function KPIView({ recruiterId }) {
         <div className="card">
           <h3>AI Analysis for Top Candidate</h3>
           {topCandidates[0] && (
-            <div style={{ padding: '1rem', background: '#f8f9fa', borderRadius: '8px' }}>
-              <p style={{ marginBottom: '0.5rem', fontWeight: '600' }}>
+            <div style={{ padding: '1rem', background: 'rgba(15, 23, 42, 0.6)', borderRadius: '8px', border: '1px solid rgba(100, 116, 139, 0.3)' }}>
+              <p style={{ marginBottom: '0.5rem', fontWeight: '600', color: '#f1f5f9' }}>
                 {topCandidates[0].name} - {topCandidates[0].position}
               </p>
-              <p style={{ color: '#666', fontSize: '0.95rem' }}>
+              <p style={{ color: '#cbd5e1', fontSize: '0.95rem' }}>
                 {topCandidates[0].analysis_notes || 'Top performing candidate based on AI analysis.'}
               </p>
             </div>
