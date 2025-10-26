@@ -241,12 +241,6 @@ const ChatbotView = ({ recruiterId, candidates }) => {
           </button>
         </div>
       </div>
-
-      {!process.env.REACT_APP_OPENAI_API_KEY && !process.env.REACT_APP_ANTHROPIC_API_KEY && (
-        <div className="api-key-notice">
-          💡 <strong>Tip:</strong> Add your OpenAI or Anthropic API key to <code>.env</code> for enhanced AI capabilities
-        </div>
-      )}
     </div>
   );
 };

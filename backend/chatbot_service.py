@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# LLaVA Configuration (same as ai_scorer.py)
+# Lava Configuration (same as ai_scorer.py)
 LAVA_TOKEN = os.getenv("LAVA_FORWARD_TOKEN")
 LAVA_BASE_URL = os.getenv("LAVA_BASE_URL")
 CLAUDE_HAIKU = "claude-3-haiku-20240307"
@@ -37,6 +37,7 @@ IMPORTANT RESPONSE GUIDELINES:
 - Avoid lengthy formatted lists unless specifically requested
 - Focus on actionable advice, not comprehensive guides
 - If the question needs more context, ask a brief follow-up question
+- Only generate ONE response per question asked, once you reach the end of the chatbot reply, do not attempt to continue the conversation as the user.
 
 Your expertise areas:
 • Generating focused interview questions
@@ -70,7 +71,7 @@ Be professional, data-driven, and practical. Give direct answers."""
         # Build the full prompt with context
         enhanced_message = self._enhance_message_with_context(message, context)
         
-        # Use LLaVA API if configured, otherwise use mock responses
+        # Use Lava API if configured, otherwise use mock responses
         if self.has_api:
             response_text = self._call_llava_api(enhanced_message, conversation_history)
         else:
@@ -79,7 +80,7 @@ Be professional, data-driven, and practical. Give direct answers."""
         return {
             "response": response_text,
             "timestamp": datetime.now().isoformat(),
-            "provider": "llava" if self.has_api else "mock"
+            "provider": "Lava" if self.has_api else "mock"
         }
     
     def _enhance_message_with_context(self, message: str, context: Optional[Dict]) -> str:
@@ -108,7 +109,7 @@ Be professional, data-driven, and practical. Give direct answers."""
         return enhanced
     
     def _call_llava_api(self, message: str, history: List[Dict[str, str]]) -> str:
-        """Call Claude via LLaVA API"""
+        """Call Claude via Lava API"""
         try:
             # Build conversation context
             conversation = f"{self.system_prompt}\n\n"
@@ -122,7 +123,7 @@ Be professional, data-driven, and practical. Give direct answers."""
             # Add current message
             full_prompt = f"{conversation}\n\nUSER: {message}\n\nASSISTANT:"
             
-            # Call Claude via LLaVA
+            # Call Claude via Lava
             url = f"{self.lava_base_url}/forward?u=https://api.anthropic.com/v1/messages"
             headers = {
                 "Content-Type": "application/json",
@@ -151,8 +152,8 @@ Be professional, data-driven, and practical. Give direct answers."""
                     error_detail = e.response.text
                 except:
                     pass
-            print(f"LLaVA API Error: {error_detail}")
-            # Fallback to mock response if LLaVA fails
+            print(f"Lava API Error: {error_detail}")
+            # Fallback to mock response if Lava fails
             return self._generate_mock_response(message, {})
         except Exception as e:
             import traceback

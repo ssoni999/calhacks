@@ -1,6 +1,7 @@
 import os
 import json
 import requests
+import time
 from sqlalchemy.orm import Session
 from database import SessionLocal
 import models
@@ -107,13 +108,72 @@ Provide a structured evaluation with scores (0-100) for each criterion. Return O
             "messages": [{"role": "user", "content": prompt}]
         }
         
-        response = requests.post(url, headers=headers, json=body)
-        response.raise_for_status()
+        # Retry logic for API calls
+        max_retries = 3
+        for attempt in range(max_retries):
+            try:
+                response = requests.post(url, headers=headers, json=body, timeout=30)
+                response.raise_for_status()
+                break
+            except requests.exceptions.RequestException as e:
+                if attempt == max_retries - 1:
+                    print(f"⚠️  API failed after {max_retries} attempts. Using fallback scoring.")
+                    # Fallback: assign default scores
+                    scores = {
+                        "experience_score": 50,
+                        "skills_score": 50,
+                        "education_score": 50,
+                        "cultural_fit_score": 50,
+                        "overall_score": 50,
+                        "strengths": "API unavailable - manual review needed",
+                        "weaknesses": "API unavailable - manual review needed",
+                        "recommendation": "maybe"
+                    }
+                    # Update candidate in database
+                    candidate.experience_score = scores["experience_score"]
+                    candidate.skills_score = scores["skills_score"]
+                    candidate.education_score = scores["education_score"]
+                    candidate.overall_score = scores["overall_score"]
+                    candidate.analysis_notes = "API unavailable - requires manual review"
+                    db.commit()
+                    db.refresh(candidate)
+                    return {
+                        "candidate_id": candidate_id,
+                        "candidate_name": candidate.name,
+                        "scores": scores,
+                        "status": "fallback"
+                    }
+                print(f"Attempt {attempt + 1} failed: {e}. Retrying in {2 ** attempt} seconds...")
+                time.sleep(2 ** attempt)
         
-        # Parse response
+        # Parse response (only if we got here successfully)
         result = response.json()
+        print(f"API Response: {result}")
+        
         content = result["content"][0]["text"]
-        scores = json.loads(content)
+        print(f"Raw content: {content}")
+        
+        # Check if Claude refused to score (insufficient resume)
+        if "do not have enough details" in content.lower() or "unable to provide" in content.lower():
+            print("⚠️  Resume insufficient for AI scoring. Using default low scores.")
+            scores = {
+                "experience_score": 20,
+                "skills_score": 20,
+                "education_score": 20,
+                "cultural_fit_score": 20,
+                "overall_score": 20,
+                "strengths": "N/A - Insufficient resume data",
+                "weaknesses": "Resume lacks detail about experience, skills, and qualifications",
+                "recommendation": "pass"
+            }
+        else:
+            # Extract JSON from content (handle markdown code blocks)
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].split("```")[0].strip()
+            
+            scores = json.loads(content)
         
         # Update candidate in database
         candidate.experience_score = scores["experience_score"]
