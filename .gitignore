@@ -24,6 +24,7 @@ package-lock.json
 *.swp
 *.swo
 *~
+.env*
 
 # OS
 .DS_Store
