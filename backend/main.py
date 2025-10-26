@@ -1,8 +1,8 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
-from pydantic import BaseModel
-from typing import List, Optional
+from pydantic import BaseModel, Field
+from typing import List, Optional, Dict
 from datetime import datetime
 import json
 import os
@@ -11,6 +11,7 @@ from database import SessionLocal, engine, Base
 import models
 import schemas
 from ai_scorer import score_candidate_with_ai, score_all_candidates_for_position
+from chatbot_service import get_chatbot_service
 
 # Set datetime for models
 from sqlalchemy import event
@@ -208,7 +209,7 @@ def get_top_10_candidates(
     metric: str = "overall",
     db: Session = Depends(get_db)
 ):
-    query = db.query(models.Candidate).filter(models.Candidate.is_rejected == False)
+    query = db.query(models.Candidate)
     if recruiter_id:
         query = query.filter(models.Candidate.recruiter_id == recruiter_id)
     
@@ -277,6 +278,74 @@ def ai_score_position(request: AIScoreBatchRequest):
     """Score all candidates for a position using AI"""
     result = score_all_candidates_for_position(request.position, request.job_description, request.rubric)
     return result
+
+# AI Chatbot endpoints
+class ChatMessage(BaseModel):
+    message: str
+    conversation_history: Optional[List[Dict[str, str]]] = Field(default_factory=list)
+    recruiter_id: Optional[int] = None
+    candidate_id: Optional[int] = None
+
+@app.post("/api/chatbot/message")
+def chatbot_message(request: ChatMessage, db: Session = Depends(get_db)):
+    """
+    Send a message to the AI chatbot and get a response
+    Chatbot can help with interview questions, candidate analysis, and hiring advice
+    """
+    chatbot = get_chatbot_service()
+    
+    # Build context from database if needed
+    context = {}
+    
+    # Add recruiter's candidates to context
+    if request.recruiter_id:
+        candidates = db.query(models.Candidate).filter(
+            models.Candidate.recruiter_id == request.recruiter_id
+        ).limit(10).all()
+        
+        context["candidates"] = [
+            {
+                "id": c.id,
+                "name": c.name,
+                "position": c.position,
+                "stage": c.stage,
+                "experience_score": c.experience_score,
+                "skills_score": c.skills_score,
+                "overall_score": c.overall_score,
+                "resume_snippet": c.resume_text[:200] if c.resume_text else ""
+            }
+            for c in candidates
+        ]
+    
+    # Add specific candidate details if requested
+    if request.candidate_id:
+        candidate = db.query(models.Candidate).filter(
+            models.Candidate.id == request.candidate_id
+        ).first()
+        
+        if candidate:
+            context["current_candidate"] = {
+                "id": candidate.id,
+                "name": candidate.name,
+                "email": candidate.email,
+                "position": candidate.position,
+                "stage": candidate.stage,
+                "resume_text": candidate.resume_text,
+                "experience_score": candidate.experience_score,
+                "skills_score": candidate.skills_score,
+                "education_score": candidate.education_score,
+                "overall_score": candidate.overall_score,
+                "analysis_notes": candidate.analysis_notes
+            }
+    
+    # Generate response
+    response = chatbot.generate_response(
+        message=request.message,
+        conversation_history=request.conversation_history,
+        context=context
+    )
+    
+    return response
 
 if __name__ == "__main__":
     import uvicorn

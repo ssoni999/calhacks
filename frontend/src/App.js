@@ -4,6 +4,7 @@ import './App.css';
 import Dashboard from './components/Dashboard';
 import CandidatesView from './components/CandidatesView';
 import KPIView from './components/KPIView';
+import ChatbotView from './components/ChatbotView';
 import AddCandidateModal from './components/AddCandidateModal';
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
@@ -116,6 +117,12 @@ function App() {
           Pipeline
         </button>
         <button 
+          className={view === 'chatbot' ? 'active' : ''} 
+          onClick={() => setView('chatbot')}
+        >
+          🤖 AI Assistant
+        </button>
+        <button 
           className={view === 'kpi' ? 'active' : ''} 
           onClick={() => setView('kpi')}
         >
@@ -136,6 +143,12 @@ function App() {
           <CandidatesView 
             candidates={candidates}
             onStageUpdate={handleStageUpdate}
+          />
+        )}
+        {view === 'chatbot' && (
+          <ChatbotView 
+            recruiterId={selectedRecruiter}
+            candidates={candidates}
           />
         )}
         {view === 'kpi' && (

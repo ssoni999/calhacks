@@ -5,6 +5,7 @@ Transform the recruiting funnel from resumes to hires with AI-powered insights a
 
 ## 🚀 Features
 
+- **🤖 AI Recruiting Assistant**: Chat with an AI to generate interview questions, analyze candidates, and get hiring advice
 - **AI-Powered Resume Analysis**: Automatically score candidates using semantic search and keyword analysis
 - **Detailed Resume Processing**: Comprehensive resume text analysis with extended candidate profiles
 - **Pipeline Management**: Track candidates through Resume Review, Phone Screen, Technical Interview, Final Round, and Offer stages
