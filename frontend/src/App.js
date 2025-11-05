@@ -6,6 +6,7 @@ import CandidatesView from './components/CandidatesView';
 import KPIView from './components/KPIView';
 import ChatbotView from './components/ChatbotView';
 import AddCandidateModal from './components/AddCandidateModal';
+import HomePage from './components/HomePage';
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8000/api';
 
@@ -15,6 +16,7 @@ function App() {
   const [candidates, setCandidates] = useState([]);
   const [view, setView] = useState('dashboard');
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showHomePage, setShowHomePage] = useState(true);
 
   useEffect(() => {
     fetchRecruiters();
@@ -79,6 +81,14 @@ function App() {
   const handleRecruiterChange = (e) => {
     setSelectedRecruiter(parseInt(e.target.value));
   };
+
+  const handleEnterApp = () => {
+    setShowHomePage(false);
+  };
+
+  if (showHomePage) {
+    return <HomePage onEnter={handleEnterApp} />;
+  }
 
   return (
     <div className="App">
