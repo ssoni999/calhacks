@@ -58,19 +58,25 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
       <div className="kpi-grid">
         <div className="kpi-card">
           <div className="kpi-header">
-            <div className="kpi-label">Total Candidates</div>
+            <div className="kpi-label">
+              Total Candidates
+            </div>
           </div>
           <div className="kpi-value">{kpis.total_candidates}</div>
         </div>
         <div className="kpi-card">
           <div className="kpi-header">
-            <div className="kpi-label">Hire Rate</div>
+            <div className="kpi-label">
+              Hire Rate
+            </div>
           </div>
           <div className="kpi-value">{kpis.conversion_rate}%</div>
         </div>
         <div className="kpi-card">
           <div className="kpi-header">
-            <div className="kpi-label">Avg Experience Score</div>
+            <div className="kpi-label">
+              Avg Experience Score
+            </div>
           </div>
           <div className="kpi-value">{kpis.average_scores.experience}</div>
         </div>
@@ -106,7 +112,9 @@ function Dashboard({ recruiterId, candidates, onStageUpdate, onRejectToggle }) {
         </div>
         <div className="kpi-card">
           <div className="kpi-header">
-            <div className="kpi-label">Avg Overall Score</div>
+            <div className="kpi-label">
+              Avg Overall Score
+            </div>
           </div>
           <div className="kpi-value">{kpis.average_scores.overall}</div>
         </div>

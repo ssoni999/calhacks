@@ -8,18 +8,48 @@ models.Base.metadata.create_all(bind=engine)
 # Create session
 db: Session = SessionLocal()
 
+def analyze_resume(resume_text: str, position: str) -> dict:
+    """AI-powered resume analysis based on keywords"""
+    experience_keywords = ["experience", "years", "worked", "developed", "implemented", "managed", "led", "built", "created", "designed", "architected"]
+    skills_keywords = ["python", "javascript", "react", "sql", "api", "backend", "frontend", "cloud", "docker", "kubernetes", "aws", "node", "django", "flask", "typescript", "java", "go", "terraform", "spark", "kafka"]
+    education_keywords = ["university", "degree", "bachelor", "master", "phd", "graduated", "college", "gpa", "summa", "magna", "cum laude"]
+
+    text_lower = resume_text.lower()
+
+    experience_score = min(100, len([kw for kw in experience_keywords if kw in text_lower]) * 8)
+    skills_score = min(100, len([kw for kw in skills_keywords if kw in text_lower]) * 6)
+    education_score = min(100, len([kw for kw in education_keywords if kw in text_lower]) * 15)
+
+    # Ensure minimum scores based on resume length
+    if len(resume_text) > 500:
+        experience_score = max(experience_score, 30)
+        skills_score = max(skills_score, 30)
+        education_score = max(education_score, 30)
+
+    overall_score = round(experience_score * 0.4 + skills_score * 0.4 + education_score * 0.2)
+
+    notes = f"Analyzed for {position} position. Experience score based on relevant work history keywords, skills score based on technical keywords, education score based on academic credentials."
+
+    return {
+        "experience_score": round(experience_score),
+        "skills_score": round(skills_score),
+        "education_score": round(education_score),
+        "overall_score": overall_score,
+        "notes": notes
+    }
+
 try:
     # Create sample recruiters
     recruiter1 = models.Recruiter(name="Sarah Johnson", email="sarah.j@company.com")
     recruiter2 = models.Recruiter(name="Michael Chen", email="michael.c@company.com")
-    
+
     db.add(recruiter1)
     db.add(recruiter2)
     db.commit()
-    
+
     # Get recruiters for foreign keys
     recruiters = db.query(models.Recruiter).all()
-    
+
     # Sample candidates for recruiter 1
     sample_candidates = [
         {
@@ -339,12 +369,19 @@ Bachelor of Science in Computer Science | UC Davis | 2018 - 2022
             "stage": "Resume Review"
         },
     ]
-    
+
     for candidate_data in sample_candidates:
         candidate_data["recruiter_id"] = recruiters[0].id
+        # Calculate scores for the candidate
+        analysis = analyze_resume(candidate_data["resume_text"], candidate_data["position"])
+        candidate_data["experience_score"] = analysis["experience_score"]
+        candidate_data["skills_score"] = analysis["skills_score"]
+        candidate_data["education_score"] = analysis["education_score"]
+        candidate_data["overall_score"] = analysis["overall_score"]
+        candidate_data["analysis_notes"] = analysis["notes"]
         candidate = models.Candidate(**candidate_data)
         db.add(candidate)
-    
+
     # Add some candidates for recruiter 2
     sample_candidates_r2 = [
         {
@@ -468,12 +505,19 @@ Bachelor of Science in Computer Science | Stanford University | 2010 - 2014
             "stage": "Final Round"
         },
     ]
-    
+
     for candidate_data in sample_candidates_r2:
         candidate_data["recruiter_id"] = recruiters[1].id
+        # Calculate scores for the candidate
+        analysis = analyze_resume(candidate_data["resume_text"], candidate_data["position"])
+        candidate_data["experience_score"] = analysis["experience_score"]
+        candidate_data["skills_score"] = analysis["skills_score"]
+        candidate_data["education_score"] = analysis["education_score"]
+        candidate_data["overall_score"] = analysis["overall_score"]
+        candidate_data["analysis_notes"] = analysis["notes"]
         candidate = models.Candidate(**candidate_data)
         db.add(candidate)
-    
+
     # Add 25 more candidates (5 per job category)
     additional_candidates = [
         # Software Engineers (5 candidates)
@@ -633,7 +677,7 @@ Bachelor of Science in Computer Science | University of Colorado | 2014 - 2018
 """,
             "stage": "Final Round"
         },
-        
+
         # Senior Software Engineers (5 candidates)
         {
             "name": "Jennifer Kim",
@@ -816,7 +860,7 @@ Bachelor of Science in Computer Science | MIT | 2006 - 2010
 """,
             "stage": "Resume Review"
         },
-        
+
         # Frontend Engineers (5 candidates)
         {
             "name": "Michelle Kim",
@@ -987,7 +1031,7 @@ Bachelor of Science in Computer Science | Portland State University | 2018 - 202
 """,
             "stage": "Resume Review"
         },
-        
+
         # DevOps Engineers (5 candidates)
         {
             "name": "Christopher Lee",
@@ -1162,7 +1206,7 @@ Bachelor of Science in Computer Science | UT Austin | 2018 - 2022
 """,
             "stage": "Resume Review"
         },
-        
+
         # Data Engineers (5 candidates)
         {
             "name": "Jennifer Park",
@@ -1345,18 +1389,25 @@ Bachelor of Science in Computer Science | Boston University | 2018 - 2022
             "stage": "Resume Review"
         }
     ]
-    
+
     # Add all additional candidates to recruiter 1
     for candidate_data in additional_candidates:
         candidate_data["recruiter_id"] = recruiters[0].id
+        # Calculate scores for the candidate
+        analysis = analyze_resume(candidate_data["resume_text"], candidate_data["position"])
+        candidate_data["experience_score"] = analysis["experience_score"]
+        candidate_data["skills_score"] = analysis["skills_score"]
+        candidate_data["education_score"] = analysis["education_score"]
+        candidate_data["overall_score"] = analysis["overall_score"]
+        candidate_data["analysis_notes"] = analysis["notes"]
         candidate = models.Candidate(**candidate_data)
         db.add(candidate)
-    
+
     db.commit()
     total_candidates = len(sample_candidates) + len(sample_candidates_r2) + len(additional_candidates)
     print("Database initialized with sample data!")
     print(f"Created {len(recruiters)} recruiters and {total_candidates} candidates")
-    
+
 except Exception as e:
     db.rollback()
     print(f"Error: {e}")

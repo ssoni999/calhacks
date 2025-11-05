@@ -76,7 +76,7 @@ def get_recruiter(recruiter_id: int, db: Session = Depends(get_db)):
 def create_candidate(candidate: schemas.CandidateCreate, db: Session = Depends(get_db)):
     # AI-powered resume analysis
     analysis = analyze_resume(candidate.resume_text, candidate.position)
-    
+
     db_candidate = models.Candidate(
         name=candidate.name,
         email=candidate.email,
@@ -117,14 +117,14 @@ def update_candidate(
     db_candidate = db.query(models.Candidate).filter(models.Candidate.id == candidate_id).first()
     if not db_candidate:
         raise HTTPException(status_code=404, detail="Candidate not found")
-    
+
     if candidate.stage:
         db_candidate.stage = candidate.stage
     if candidate.notes:
         db_candidate.notes = candidate.notes
     if candidate.is_rejected is not None:
         db_candidate.is_rejected = candidate.is_rejected
-    
+
     db.commit()
     db.refresh(db_candidate)
     return db_candidate
@@ -133,23 +133,30 @@ def update_candidate(
 @app.get("/api/recruiters/{recruiter_id}/kpis")
 def get_recruiter_kpis(recruiter_id: int, db: Session = Depends(get_db)):
     candidates = db.query(models.Candidate).filter(models.Candidate.recruiter_id == recruiter_id).all()
-    
+
     total_candidates = len(candidates)
     resume_review = len([c for c in candidates if c.stage == "Resume Review"])
     phone_screen = len([c for c in candidates if c.stage == "Phone Screen"])
     technical_interview = len([c for c in candidates if c.stage == "Technical Interview"])
     final_round = len([c for c in candidates if c.stage == "Final Round"])
     offers = len([c for c in candidates if c.stage == "Offer"])
-    
+
     # Filter out None values for score calculations
     exp_scores = [c.experience_score for c in candidates if c.experience_score is not None]
     skill_scores = [c.skills_score for c in candidates if c.skills_score is not None]
     overall_scores = [c.overall_score for c in candidates if c.overall_score is not None]
-    
+    education_scores = [c.education_score for c in candidates if c.education_score is not None]
+
     avg_experience_score = sum(exp_scores) / len(exp_scores) if exp_scores else 0
     avg_skills_score = sum(skill_scores) / len(skill_scores) if skill_scores else 0
     avg_overall_score = sum(overall_scores) / len(overall_scores) if overall_scores else 0
-    
+    avg_education_score = sum(education_scores) / len(education_scores) if education_scores else 0
+
+    # Calculate additional KPIs
+    rejected_count = len([c for c in candidates if c.is_rejected])
+    rejection_rate = round((rejected_count / total_candidates * 100) if total_candidates > 0 else 0, 2)
+    active_candidates = total_candidates - rejected_count
+
     # Calculate scores by position/category
     scores_by_position = {}
     for candidate in candidates:
@@ -160,30 +167,30 @@ def get_recruiter_kpis(recruiter_id: int, db: Session = Depends(get_db)):
                 "overall_scores": [],
                 "count": 0
             }
-        
+
         if candidate.experience_score is not None:
             scores_by_position[candidate.position]["experience_scores"].append(candidate.experience_score)
         if candidate.skills_score is not None:
             scores_by_position[candidate.position]["skills_scores"].append(candidate.skills_score)
         if candidate.overall_score is not None:
             scores_by_position[candidate.position]["overall_scores"].append(candidate.overall_score)
-        
+
         scores_by_position[candidate.position]["count"] += 1
-    
+
     # Calculate averages for each position
     position_averages = {}
     for position, scores in scores_by_position.items():
         exp_avg = sum(scores["experience_scores"]) / len(scores["experience_scores"]) if scores["experience_scores"] else 0
         skills_avg = sum(scores["skills_scores"]) / len(scores["skills_scores"]) if scores["skills_scores"] else 0
         overall_avg = sum(scores["overall_scores"]) / len(scores["overall_scores"]) if scores["overall_scores"] else 0
-        
+
         position_averages[position] = {
             "count": scores["count"],
             "avg_experience": round(exp_avg, 2),
             "avg_skills": round(skills_avg, 2),
             "avg_overall": round(overall_avg, 2)
         }
-    
+
     return {
         "recruiter_id": recruiter_id,
         "total_candidates": total_candidates,
@@ -197,9 +204,12 @@ def get_recruiter_kpis(recruiter_id: int, db: Session = Depends(get_db)):
         "average_scores": {
             "experience": round(avg_experience_score, 2),
             "skills": round(avg_skills_score, 2),
-            "overall": round(avg_overall_score, 2)
+            "overall": round(avg_overall_score, 2),
+            "education": round(avg_education_score, 2)
         },
         "conversion_rate": round((offers / total_candidates * 100) if total_candidates > 0 else 0, 2),
+        "rejection_rate": rejection_rate,
+        "active_candidates": active_candidates,
         "scores_by_position": position_averages
     }
 
@@ -212,7 +222,7 @@ def get_top_10_candidates(
     query = db.query(models.Candidate)
     if recruiter_id:
         query = query.filter(models.Candidate.recruiter_id == recruiter_id)
-    
+
     # Order by selected metric, handling null values
     if metric == "overall":
         candidates = query.filter(models.Candidate.overall_score.isnot(None)).order_by(
@@ -226,7 +236,7 @@ def get_top_10_candidates(
         candidates = query.filter(models.Candidate.skills_score.isnot(None)).order_by(
             models.Candidate.skills_score.desc()
         ).limit(10).all()
-    
+
     return [schemas.Candidate.model_validate(c) for c in candidates]
 
 def analyze_resume(resume_text: str, position: str) -> dict:
@@ -235,17 +245,17 @@ def analyze_resume(resume_text: str, position: str) -> dict:
     experience_keywords = ["experience", "years", "worked", "developed", "implemented", "managed"]
     skills_keywords = ["python", "javascript", "react", "sql", "api", "backend", "frontend", "cloud"]
     education_keywords = ["university", "degree", "bachelor", "master", "phd", "graduated"]
-    
+
     text_lower = resume_text.lower()
-    
+
     experience_score = min(100, len([kw for kw in experience_keywords if kw in text_lower]) * 10)
     skills_score = min(100, len([kw for kw in skills_keywords if kw in text_lower]) * 15)
     education_score = min(100, len([kw for kw in education_keywords if kw in text_lower]) * 20)
-    
+
     overall_score = (experience_score * 0.4 + skills_score * 0.4 + education_score * 0.2)
-    
+
     notes = f"Analyzed for {position} position. Experience score based on relevant work history keywords."
-    
+
     return {
         "experience_score": round(experience_score),
         "skills_score": round(skills_score),
@@ -293,16 +303,16 @@ def chatbot_message(request: ChatMessage, db: Session = Depends(get_db)):
     Chatbot can help with interview questions, candidate analysis, and hiring advice
     """
     chatbot = get_chatbot_service()
-    
+
     # Build context from database if needed
     context = {}
-    
+
     # Add recruiter's candidates to context
     if request.recruiter_id:
         candidates = db.query(models.Candidate).filter(
             models.Candidate.recruiter_id == request.recruiter_id
         ).limit(10).all()
-        
+
         context["candidates"] = [
             {
                 "id": c.id,
@@ -316,13 +326,13 @@ def chatbot_message(request: ChatMessage, db: Session = Depends(get_db)):
             }
             for c in candidates
         ]
-    
+
     # Add specific candidate details if requested
     if request.candidate_id:
         candidate = db.query(models.Candidate).filter(
             models.Candidate.id == request.candidate_id
         ).first()
-        
+
         if candidate:
             context["current_candidate"] = {
                 "id": candidate.id,
@@ -337,14 +347,14 @@ def chatbot_message(request: ChatMessage, db: Session = Depends(get_db)):
                 "overall_score": candidate.overall_score,
                 "analysis_notes": candidate.analysis_notes
             }
-    
+
     # Generate response
     response = chatbot.generate_response(
         message=request.message,
         conversation_history=request.conversation_history,
         context=context
     )
-    
+
     return response
 
 if __name__ == "__main__":
