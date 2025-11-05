@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Starting RecruitAI..."
+echo "Starting HireIQ..."
 echo "==================="
 echo ""
 
@@ -47,7 +47,7 @@ FRONTEND_PID=$!
 cd ..
 
 echo ""
-echo "✅ RecruitAI is running!"
+echo "✅ HireIQ is running!"
 echo "Frontend: http://localhost:3000"
 echo "Backend API: http://localhost:8000"
 echo ""

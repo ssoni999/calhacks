@@ -1,4 +1,4 @@
-# RecruitAI - Quick Start Guide
+# HireIQ - Quick Start Guide
 
 Get your hiring platform up and running in 5 minutes!
 

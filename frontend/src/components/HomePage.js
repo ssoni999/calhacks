@@ -9,7 +9,7 @@ function HomePage({ onEnter }) {
           <div className="logo-animation">
             <div className="logo-circle"></div>
             <h1 className="hero-title">
-              Recruit<span className="highlight">AI</span>
+              Hire<span className="highlight">IQ</span>
             </h1>
           </div>
           
@@ -100,7 +100,7 @@ function HomePage({ onEnter }) {
 
       <footer className="homepage-footer">
         <div className="footer-content">
-          <p>© 2025 RecruitAI. Powered by AI to revolutionize your hiring.</p>
+          <p>© 2025 HireIQ. Powered by AI to revolutionize your hiring.</p>
         </div>
       </footer>
 

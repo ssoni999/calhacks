@@ -25,7 +25,7 @@ def set_recruiter_created_at(mapper, connection, target):
 def set_candidate_created_at(mapper, connection, target):
     target.created_at = datetime.now()
 
-app = FastAPI(title="RecruitAI - Streamlined Hiring Platform")
+app = FastAPI(title="HireIQ - Streamlined Hiring Platform")
 
 # CORS middleware
 app.add_middleware(
@@ -49,7 +49,7 @@ Base.metadata.create_all(bind=engine)
 
 @app.get("/")
 def read_root():
-    return {"message": "RecruitAI API is running"}
+    return {"message": "HireIQ API is running"}
 
 # Recruiter endpoints
 @app.post("/api/recruiters", response_model=schemas.Recruiter)

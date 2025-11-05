@@ -95,7 +95,7 @@ function App() {
       <header className="app-header">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className="header-content">
-            <h1>RecruitAI</h1>
+            <h1>HireIQ</h1>
             <p>Streamlined Hiring Platform</p>
           </div>
           <div className="header-controls">

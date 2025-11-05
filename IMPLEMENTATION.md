@@ -2,7 +2,7 @@
 
 ## 🎯 Project Overview
 
-**RecruitAI** - A comprehensive hiring platform that streamlines the recruiting process from resume to hire, featuring AI-powered analysis, pipeline management, and KPI tracking.
+**HireIQ** - A comprehensive hiring platform that streamlines the recruiting process from resume to hire, featuring AI-powered analysis, pipeline management, and KPI tracking.
 
 ## ✨ Key Features Implemented
 
